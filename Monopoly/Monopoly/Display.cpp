@@ -105,7 +105,7 @@ string Display::opportunity[9] = {
 		{"．－－－－－－．"},
 };
 Display::Display() {
-
+	srand(time(NULL));
 }
 
 void Display::rollDiceAnimate(int a)
@@ -124,7 +124,8 @@ void Display::printBoard()
 	setConsoleCursorCoordinate(0, 0);
 	for (int i = 0; i < 49; i++)
 	{
-		cout << board[i] << endl;
+		cout << board[i];
+		setConsoleCursorCoordinate(0, i + 1);
 	}
 	// 使整體畫面上提，不清楚自己註解掉下行跑一次看看就知道了
 	setConsoleCursorCoordinate(0, 0);
@@ -143,4 +144,13 @@ void Display::printDice(int num)
 		setConsoleCursorCoordinate(66, 24 + i);
 		cout << dice[num][i];
 	}
+}
+
+void Display::printMainMenu() {
+	setConsoleCursorCoordinate(0, 0);
+	cout << "→開始新局";
+	setConsoleCursorCoordinate(2, 1);
+	cout << "讀取地圖";
+	setConsoleCursorCoordinate(2, 2);
+	cout << "結束遊戲";
 }
