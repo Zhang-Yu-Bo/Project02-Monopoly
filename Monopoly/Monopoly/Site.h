@@ -20,6 +20,7 @@ public:
 	int getFirstTolls() const;
 	int getSecondTolls() const;
 	int getThirdTolls() const;
+	int getEstateLevel() const;
 private:
 	int location;
 	string name;
@@ -29,6 +30,7 @@ private:
 	int firstTolls;
 	int secondTolls;
 	int thirdTolls;
+	int estateLevel;
 };
 
 #endif // !_SITE_H_

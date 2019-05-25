@@ -10,6 +10,7 @@ Site::Site() {
 	this->firstTolls = 0;
 	this->secondTolls = 0;
 	this->thirdTolls = 0;
+	this->estateLevel = 0;
 }
 
 // 物件位置，物件名稱，物件類型，初始價格，階段0過路費，階段1過路費，階段2過路費，階段3過路費
@@ -22,6 +23,7 @@ Site::Site(int location, string name, int type, int firstPrice = 0, int tolls = 
 	this->firstTolls = firstPrice;
 	this->secondTolls = secondTolls;
 	this->thirdTolls = thirdTolls;
+	this->estateLevel = 0;
 }
 
 int Site::getLocation() const {
@@ -54,4 +56,8 @@ int Site::getSecondTolls() const {
 
 int Site::getThirdTolls() const {
 	return this->thirdTolls;
+}
+
+int Site::getEstateLevel() const {
+	return this->estateLevel;
 }
