@@ -1,15 +1,53 @@
 #include "Game.h"
 
 Game::Game(string fileName = "basemap") {
-	system("cls");
-	cout << fileName;
-	Sleep(1000);
 
-	this->mapFileName = fileName;
 	system("cls");
 	Display::setConsoleCursorCoordinate(0, 0);
 
+	// initial condition
+	this->mapFileName = fileName;
+	this->life = true;
+
+	// loading Map from file
+	this->loadMap();
+}
+
+void Game::start() {
 	system("mode con cols=220 lines=50");
 	Display::printBoard();
 	Display::rollDiceAnimate(2);
+}
+
+bool Game::isGameAlive() {
+	return this->life;
+}
+
+void Game::process() {
+	int command = 0;
+	while (command = _getch()) {
+		if (command == KEYBOARD_ESCAPE) {
+			this->life = false;
+			return;
+		}
+		else {
+			return;
+		}
+	}
+}
+
+void Game::loadMap() {
+	fstream inputFile;
+	inputFile.open("Map/" + this->mapFileName + ".txt");
+
+	if (!inputFile) {
+		system("cls");
+		Display::setConsoleCursorCoordinate();
+		cout << "檔案開啟失敗，結束程式\n";
+		system("pause");
+		exit(1);
+	}
+	else {
+		// ...開始讀檔
+	}
 }

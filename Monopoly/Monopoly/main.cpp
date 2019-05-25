@@ -14,11 +14,12 @@ int main(void) {
 			// ...Åª¨ú¦a¹Ï
 			getline(cin, fileName);
 		}
-		if (fileName == "exit") {
-			continue;
-		}
-		else {
+		if (fileName != "exit") {
 			Game newGame(fileName);
+			newGame.start();
+			while (newGame.isGameAlive()) {
+				newGame.process();
+			}
 		}
 	}
 	return 0;

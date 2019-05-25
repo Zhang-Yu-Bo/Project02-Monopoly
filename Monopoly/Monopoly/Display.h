@@ -16,7 +16,7 @@ public:
 	static void rollDiceAnimate(int a);
 	static void printBoard();
 	static void printMainMenu();
-	static void setConsoleCursorCoordinate(int x = 42, int y = 1);
+	static void setConsoleCursorCoordinate(int = 0, int = 0);
 private:
 	static void printDice(int num);
 	static string dice[6][3];
