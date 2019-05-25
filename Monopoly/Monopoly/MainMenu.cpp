@@ -4,10 +4,8 @@ MainMenu::MainMenu() {
 	cout << "Monopoly\n";
 }
 
-void MainMenu::showMenu() {
+int MainMenu::showMenu() {
 	system("mode con cols=50 lines=10");
-	//Display::printBoard();
-	//Display::rollDiceAnimate(2);
 	Display::printMainMenu();
 	int command = 0;
 	int x = 0, y = 0;
@@ -22,13 +20,19 @@ void MainMenu::showMenu() {
 		else if (command == KEYBOARD_ENTER) {
 			if (y == 0) {
 				// 開始新局
+				return 1;
 			}
 			else if (y == 1) {
 				// 讀取地圖
+				system("cls");
+				Display::setConsoleCursorCoordinate(0, 0);
+				cout << "請輸入地圖檔名（無須打副檔名、輸入exit返回）：";
+				Display::setConsoleCursorCoordinate(0, 1);
+				return 2;
 			}
 			else if (y == 2) {
 				// 結束遊戲
-				exit(1);
+				return 0;
 			}
 		}
 

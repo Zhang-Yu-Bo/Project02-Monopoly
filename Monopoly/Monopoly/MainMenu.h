@@ -20,7 +20,7 @@ class MainMenu
 {
 public:
 	MainMenu();
-	void showMenu();
+	int showMenu();
 private:
 
 };
