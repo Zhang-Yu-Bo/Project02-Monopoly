@@ -126,6 +126,8 @@ void Display::printBoard()
 	{
 		cout << board[i] << endl;
 	}
+	// 使整體畫面上提，不清楚自己註解掉下行跑一次看看就知道了
+	setConsoleCursorCoordinate(0, 0);
 }
 
 void Display::setConsoleCursorCoordinate(int x, int y)
