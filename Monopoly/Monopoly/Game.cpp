@@ -8,6 +8,7 @@ Game::Game(string fileName = "basemap") {
 	// initial condition
 	this->mapFileName = fileName;
 	this->life = true;
+	this->playerState = 0;
 
 	// loading Map from file
 	this->loadMap();

@@ -1,6 +1,7 @@
 #pragma once
 #include "Display.h"
 #include "Site.h"
+#include "Player.h"
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
@@ -33,7 +34,9 @@ private:
 	// ...≈‹º∆
 	string mapFileName;
 	bool life;
-	vector<Site> site;
+	vector<Site> sites;
+	vector<Player> players;
+	int playerState;
 };
 
 #endif // !_GAME_H_

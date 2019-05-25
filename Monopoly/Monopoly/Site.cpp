@@ -15,7 +15,7 @@ Site::Site() {
 }
 
 // 物件位置，物件名稱，物件類型，初始價格，階段0過路費，階段1過路費，階段2過路費，階段3過路費
-Site::Site(int location, string name, int type, int firstPrice = 0, int tolls = 0, int firstTolls = 0, int secondTolls = 0, int thirdTolls = 0) {
+Site::Site(int location, string name, int type, int firstPrice, int tolls, int firstTolls, int secondTolls, int thirdTolls, int estateLevel, int owner) {
 	this->location = location;
 	this->name = name;
 	this->type = type;
@@ -24,46 +24,6 @@ Site::Site(int location, string name, int type, int firstPrice = 0, int tolls = 
 	this->firstTolls = firstPrice;
 	this->secondTolls = secondTolls;
 	this->thirdTolls = thirdTolls;
-	this->estateLevel = 0;
-	this->owner = 0;
-}
-
-int Site::getLocation() const {
-	return this->location;
-}
-
-string Site::getName() const {
-	return this->name;
-}
-
-int Site::getType() const {
-	return this->type;
-}
-
-int Site::getFirstPrice() const {
-	return this->firstPrice;
-}
-
-int Site::getTolls() const {
-	return this->tolls;
-}
-
-int Site::getFirstTolls() const {
-	return this->firstTolls;
-}
-
-int Site::getSecondTolls() const {
-	return this->secondTolls;
-}
-
-int Site::getThirdTolls() const {
-	return this->thirdTolls;
-}
-
-int Site::getEstateLevel() const {
-	return this->estateLevel;
-}
-
-int Site::getOwner() const {
-	return this->owner;
+	this->estateLevel = estateLevel;
+	this->owner = owner;
 }
