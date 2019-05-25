@@ -5,8 +5,11 @@ MainMenu::MainMenu() {
 }
 
 int MainMenu::showMenu() {
+	// 調整視窗大小
 	system("mode con cols=50 lines=10");
+	// 繪製Menu
 	Display::printMainMenu();
+
 	int command = 0;
 	int x = 0, y = 0;
 	Display::setConsoleCursorCoordinate(0, 0);

@@ -15,6 +15,7 @@ int main(void) {
 			getline(cin, fileName);
 		}
 		if (fileName != "exit") {
+			// ¶}©l¹CÀ¸
 			Game newGame(fileName);
 			newGame.start();
 			while (newGame.isGameAlive()) {
