@@ -21,6 +21,7 @@ public:
 	int getSecondTolls() const;
 	int getThirdTolls() const;
 	int getEstateLevel() const;
+	int getOwner() const;
 private:
 	int location;
 	string name;
@@ -31,6 +32,7 @@ private:
 	int secondTolls;
 	int thirdTolls;
 	int estateLevel;
+	int owner;
 };
 
 #endif // !_SITE_H_
