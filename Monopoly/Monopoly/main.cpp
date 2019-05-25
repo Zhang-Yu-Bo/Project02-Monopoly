@@ -4,6 +4,7 @@
 using namespace std;
 
 int main(void) {
+	system("mode con cols=220 lines=50");
 	MainMenu menu;
 	Display::printBoard();
 	Display::rollDiceAnimate(2);
