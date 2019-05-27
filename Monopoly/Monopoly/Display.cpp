@@ -20,6 +20,58 @@ string Display::dice[6][3] = {
 		,"●　●"
 		,"●　●"}
 };
+string Display::bigNumber[10][5] = {
+		{"■■■"
+		,"■　■"
+		,"■　■"
+		,"■　■"
+		,"■■■"} ,
+		{"　　■"
+		,"　　■"
+		,"　　■"
+		,"　　■"
+		,"　　■"} ,
+		{"■■■"
+		,"　　■"
+		,"■■■"
+		,"■　　"
+		,"■■■"} ,
+		{"■■■"
+		,"　　■"
+		,"■■■"
+		,"　　■"
+		,"■■■"} ,
+		{"■　■"
+		,"■　■"
+		,"■■■"
+		,"　　■"
+		,"　　■"} ,
+		{"■■■"
+		,"■　　"
+		,"■■■"
+		,"　　■"
+		,"■■■"} ,
+		{"■■■"
+		,"■　　"
+		,"■■■"
+		,"■　■"
+		,"■■■"} ,
+		{"■■■"
+		,"　　■"
+		,"　　■"
+		,"　　■"
+		,"　　■"} ,
+		{"■■■"
+		,"■　■"
+		,"■■■"
+		,"■　■"
+		,"■■■"} ,
+		{"■■■"
+		,"■　■"
+		,"■■■"
+		,"　　■"
+		,"　　■"}
+};
 string Display::board[49] = {
 		{"．－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－．"},
 		{"｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜　　　　　　｜"},
@@ -90,11 +142,11 @@ string Display::rightSpace[49] = {
 		{"　　　　　　　　　　　　　　　　　　｜　　　　　　　　　　　　　　　　　｜"},
 		{"－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－｜"},
 		{"　　　　　　　　　　　　　　｜　　　　　　　　　　　　　　　　　　　　　｜"},
-		{"　目前玩家：　　■■■　　　｜　當前回合：　　■■■　　■■■　　　　　｜"},
-		{"　　　　　　　　■　■　　　｜　　　　　　　　■　■　　■　■　　　　　｜"},
-		{"　　　　　　　　■■■　　　｜　　　　　　　　■■■　　■■■　　　　　｜"},
-		{"　　　　　　　　■　■　　　｜　　　　　　　　■　■　　■　■　　　　　｜"},
-		{"　　　　　　　　■■■　　　｜　　　　　　　　■■■　　■■■　　　　　｜"},
+		{"　目前玩家：　　　　　　　　｜　當前回合：　　■■■　　■■■　　　　　｜"},
+		{"　　　　　　　　　　　　　　｜　　　　　　　　■　■　　■　■　　　　　｜"},
+		{"　　　　　　　　　　　　　　｜　　　　　　　　■■■　　■■■　　　　　｜"},
+		{"　　　　　　　　　　　　　　｜　　　　　　　　■　■　　■　■　　　　　｜"},
+		{"　　　　　　　　　　　　　　｜　　　　　　　　■■■　　■■■　　　　　｜"},
 		{"　　　　　　　　　　　　　　｜　　　　　　　　　　　　　　　　　　　　　｜"},
 		{"－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－｜"},
 		{"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜"},
@@ -155,6 +207,7 @@ string Display::opportunity[9] = {
 		{"｜　　　　　　｜"},
 		{"．－－－－－－．"},
 };
+
 Display::Display() {
 	srand(time(NULL));
 }
@@ -179,6 +232,33 @@ void Display::printBoard()
 		setConsoleCursorCoordinate(0, i + 1);
 	}
 	//使整體畫面上提，不清楚自己註解掉下行跑一次看看就知道了
+	setConsoleCursorCoordinate(0, 0);
+}
+
+void Display::printCurrentPlayer(int a)
+{
+	setConsoleCursorCoordinate(158, 18);
+	for (int i = 0; i < 5; i++) {
+		cout << bigNumber[a][i];
+		setConsoleCursorCoordinate(158, i + 19);
+	}
+	setConsoleCursorCoordinate(0, 0);
+}
+
+void Display::printRound(int a)
+{
+	int x = a / 10;
+	int y = a % 10;
+	setConsoleCursorCoordinate(188, 18);
+	for (int i = 0; i < 5; i++) {
+		cout << bigNumber[x][i];
+		setConsoleCursorCoordinate(188, i + 19);
+	}
+	setConsoleCursorCoordinate(198, 18);
+	for (int i = 0; i < 5; i++) {
+		cout << bigNumber[y][i];
+		setConsoleCursorCoordinate(198, i + 19);
+	}
 	setConsoleCursorCoordinate(0, 0);
 }
 

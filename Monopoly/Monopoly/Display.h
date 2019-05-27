@@ -15,12 +15,15 @@ public:
 	Display();
 	static void rollDiceAnimate(int a);
 	static void printBoard();
+	static void printCurrentPlayer(int a);
+	static void printRound(int a);
 	static void printRightSpace();
 	static void printMainMenu();
 	static void setConsoleCursorCoordinate(int = 0, int = 0);
 private:
 	static void printDice(int num);
 	static string dice[6][3];
+	static string bigNumber[10][5];
 	static string board[49];
 	static string rightSpace[49];
 	static string start[9];
