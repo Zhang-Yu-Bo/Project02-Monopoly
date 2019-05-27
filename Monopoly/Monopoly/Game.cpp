@@ -17,6 +17,7 @@ Game::Game(string fileName = "basemap") {
 void Game::start() {
 	system("mode con cols=220 lines=50");
 	Display::printBoard();
+	Display::printRightSpace();
 	Display::rollDiceAnimate(2);
 }
 
