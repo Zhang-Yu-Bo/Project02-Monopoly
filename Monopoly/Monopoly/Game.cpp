@@ -106,7 +106,26 @@ void Game::loadMap() {
 		exit(1);
 	}
 	else {
-		// ...¶}©lÅªÀÉ
+		int location, type;
+		int firstPrice, tolls, firstTolls, secondTolls, thirdTolls;
+		string name;
+		inputFile >> mapName;
+		inputFile >> remainTurn;
+		inputFile >> allPlayers;
+		for (int i = 0; i < 28; i++) {
+			inputFile >> location >> name >> type;
+			if (type == 1) 
+			{
+				inputFile >> firstPrice >> tolls >> firstTolls >> secondTolls >> thirdTolls;
+				Site loadSite(location, name, type, firstPrice, tolls, firstTolls, secondTolls, thirdTolls);
+				sites.push_back(loadSite);
+			}
+			else
+			{
+				Site loadSite(location, name, type);
+				sites.push_back(loadSite);
+			}
+		}
 		players.push_back(Player(0, 0, 0));
 	}
 }

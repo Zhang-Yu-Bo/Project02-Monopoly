@@ -43,6 +43,8 @@ private:
 	void loadMap();
 	void openOptions();
 	// ...變數
+	string mapName; //地圖名稱，與mapFileName不同
+	int allPlayers; //總共多少玩家
 	string mapFileName;
 	bool gameLife;
 	vector<Site> sites;
