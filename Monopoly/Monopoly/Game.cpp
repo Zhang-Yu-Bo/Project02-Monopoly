@@ -57,6 +57,7 @@ void Game::loadMap() {
 }
 
 void Game::openOptions() {
-	this->life = false;
+	//this->life = false;
+	Display::showGameOptions();
 	return;
 }
