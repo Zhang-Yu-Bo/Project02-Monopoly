@@ -44,10 +44,14 @@ private:
 	void openOptions();
 	// ...變數
 	string mapFileName;
-	bool life;
+	bool gameLife;
 	vector<Site> sites;
 	vector<Player> players;
-	int playerState;
+	// 誰的回合
+	int whosTurn;
+	// 剩餘回合
+	int remainTurn;
+
 };
 
 #endif // !_GAME_H_

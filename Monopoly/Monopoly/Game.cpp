@@ -7,8 +7,8 @@ Game::Game(string fileName = "basemap") {
 
 	// initial condition
 	this->mapFileName = fileName;
-	this->life = true;
-	this->playerState = 0;
+	this->gameLife = true;
+	this->whosTurn = 0;
 
 	// loading Map from file
 	this->loadMap();
@@ -20,15 +20,68 @@ void Game::start() {
 	Display::printRightSpace();
 	Display::printCurrentPlayer(1);
 	Display::printRound(1);
-	Display::rollDiceAnimate(2);
+	system("pause");
+	//Display::rollDiceAnimate(2);
 }
 
 bool Game::isGameAlive() {
-	return this->life;
+	return this->gameLife;
 }
 
 void Game::process() {
-	int command = 0;
+	//int command = 0;
+	int playerNum = players.size();
+
+	// 尋找是哪位玩家的回合
+	auto iterator = players.begin();
+	for (; iterator != players.end(); iterator++)
+		if (iterator->playerID == this->whosTurn)
+			break;
+
+	while (this->gameLife) {
+		if (iterator == players.end())
+			iterator = players.begin();
+
+		// 玩家行為開始
+
+		// 玩家行為結束
+
+		// 破產判定開始
+		vector<Player> fakePlayers;
+		for (auto i = players.begin(); i != players.end(); i++) {
+			if (i->money >= 0) {
+				fakePlayers.push_back(*i);
+			}
+			else {
+
+			}
+		}
+		players = fakePlayers;
+		playerNum = players.size();
+		if (playerNum == 0) {
+			this->gameLife = false;
+			return;
+		}
+		// 破產判定結束
+
+		// 勝利判定開始
+		playerNum = players.size();
+		if (playerNum == 1) {
+			system("cls");
+			auto i = players.begin();
+			for (; i != players.end(); i++)
+				if (i->money >= 0)
+					break;
+			cout << "Player" << i->playerID << " is winner.\n";
+			this->gameLife = false;
+			system("pause");
+			return;
+		}
+		// 勝利判定結束
+
+		iterator++;
+	}
+	/*
 	while (command = _getch()) {
 		if (command == KEYBOARD_ESCAPE) {
 			this->openOptions();
@@ -38,6 +91,7 @@ void Game::process() {
 			return;
 		}
 	}
+	*/
 }
 
 void Game::loadMap() {
@@ -53,10 +107,11 @@ void Game::loadMap() {
 	}
 	else {
 		// ...開始讀檔
+		players.push_back(Player(0, 0, 0));
 	}
 }
 
 void Game::openOptions() {
-	this->life = false;
+	this->gameLife = false;
 	return;
 }
