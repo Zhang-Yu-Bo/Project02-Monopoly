@@ -207,40 +207,12 @@ string Display::opportunity[9] = {
 		{"｜　　　　　　｜"},
 		{"．－－－－－－．"},
 };
-string Display::option[17] = {
-	{"■■■■■■■■■■■■"},
-	{"■　　　　　　　　　　■"},
-	{"■　■　■　■　■　■■"},
-	{"■　　　　　　　　　　■"},
-	{"■　　　繼續遊戲　　　■"},
-	{"■　　　　　　　　　　■"},
-	{"■　■■■■■■■■　■"},
-	{"■　　　　　　　　　　■"},
-	{"■　　　儲存遊戲　　　■"},
-	{"■　　　　　　　　　　■"},
-	{"■　■■■■■■■■　■"},
-	{"■　　　　　　　　　　■"},
-	{"■　　　離開遊戲　　　■"},
-	{"■　　　　　　　　　　■"},
-	{"■■　■　■　■　■　■"},
-	{"■　　　　　　　　　　■"},
-	{"■■■■■■■■■■■■"}
-};
 
 CONSOLE_CURSOR_INFO Display::cci;
 
 Display::Display() {
 	srand(time(NULL));
 }
-
-void Display::SetColor(int f = 7, int b = 0)
-{
-	unsigned short ForeColor = f + 16 * b;
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hCon, ForeColor);
-}
-
-
 
 void Display::rollDiceAnimate(int a)
 {
@@ -335,10 +307,5 @@ void Display::cursorVisiable(bool flag) {
 }
 
 void Display::showGameOptions() {
-	SetColor(240);
-	for (int i = 0; i < 17; i++) {
-		setConsoleCursorCoordinate(8, 28 + i);
-		cout << option[i] << endl;
-	}
-	SetColor(7);
+
 }

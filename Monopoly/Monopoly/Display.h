@@ -13,7 +13,6 @@ class Display
 {
 public:
 	Display();
-	static void SetColor(int, int);
 	static void rollDiceAnimate(int a);
 	static void printBoard();
 	static void printCurrentPlayer(int a);
@@ -32,7 +31,6 @@ private:
 	static string start[9];
 	static string chance[9];
 	static string opportunity[9];
-	static string option[17];
 	static CONSOLE_CURSOR_INFO cci;
 };
 
