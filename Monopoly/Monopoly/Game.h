@@ -41,6 +41,7 @@ public:
 private:
 	// ...內部函式
 	void loadMap();
+	void openOptions();
 	// ...變數
 	string mapFileName;
 	bool life;

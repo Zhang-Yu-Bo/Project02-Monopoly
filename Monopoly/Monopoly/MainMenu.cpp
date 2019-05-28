@@ -1,7 +1,7 @@
 #include "MainMenu.h"
 
 MainMenu::MainMenu() {
-	cout << "Monopoly\n";
+	Display::cursorVisiable(false);
 }
 
 int MainMenu::showMenu() {

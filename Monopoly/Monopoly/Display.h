@@ -20,6 +20,8 @@ public:
 	static void printRightSpace();
 	static void printMainMenu();
 	static void setConsoleCursorCoordinate(int = 0, int = 0);
+	static void cursorVisiable(bool);
+	static void showGameOptions();
 private:
 	static void printDice(int num);
 	static string dice[6][3];
@@ -29,6 +31,7 @@ private:
 	static string start[9];
 	static string chance[9];
 	static string opportunity[9];
+	static CONSOLE_CURSOR_INFO cci;
 };
 
 #endif // !_DISPLAY_H_

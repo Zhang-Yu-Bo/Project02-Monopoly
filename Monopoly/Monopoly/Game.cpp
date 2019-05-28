@@ -31,7 +31,7 @@ void Game::process() {
 	int command = 0;
 	while (command = _getch()) {
 		if (command == KEYBOARD_ESCAPE) {
-			this->life = false;
+			this->openOptions();
 			return;
 		}
 		else {
@@ -54,4 +54,9 @@ void Game::loadMap() {
 	else {
 		// ...¶}©lÅªÀÉ
 	}
+}
+
+void Game::openOptions() {
+	this->life = false;
+	return;
 }

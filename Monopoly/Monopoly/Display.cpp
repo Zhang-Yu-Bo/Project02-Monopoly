@@ -208,6 +208,8 @@ string Display::opportunity[9] = {
 		{"．－－－－－－．"},
 };
 
+CONSOLE_CURSOR_INFO Display::cci;
+
 Display::Display() {
 	srand(time(NULL));
 }
@@ -296,4 +298,14 @@ void Display::printMainMenu() {
 	cout << "讀取地圖";
 	setConsoleCursorCoordinate(2, 2);
 	cout << "結束遊戲";
+}
+
+void Display::cursorVisiable(bool flag) {
+	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
+	cci.bVisible = flag;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
+}
+
+void Display::showGameOptions() {
+
 }
