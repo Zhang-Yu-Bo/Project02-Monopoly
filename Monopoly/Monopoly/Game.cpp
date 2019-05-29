@@ -20,6 +20,7 @@ void Game::start() {
 	Display::printRightSpace();
 	Display::printCurrentPlayer(1);
 	Display::printRound(1);
+	this->openOptions();
 	system("pause");
 	//Display::rollDiceAnimate(2);
 }
@@ -203,6 +204,7 @@ void Game::loadMap() {
 }
 
 void Game::openOptions() {
-	this->gameLife = false;
+	Display::showGameOptions();
+	//this->gameLife = false;
 	return;
 }
