@@ -151,6 +151,7 @@ void Game::loadMap() {
 		exit(1);
 	}
 	else {
+		// 地點讀取
 		int location, type;
 		int firstPrice, tolls, firstTolls, secondTolls, thirdTolls;
 		string name;
@@ -171,7 +172,33 @@ void Game::loadMap() {
 				sites.push_back(loadSite);
 			}
 		}
+		// 地點排序開始
+		for (int i = 0; i < sites.size() - 1; i++) {
+			for (int j = 0; j < sites.size() - 1; j++) {
+				if (sites[j].location > sites[j + 1].location) {
+					Site temp = sites[j];
+					sites[j] = sites[j + 1];
+					sites[j + 1] = temp;
+				}
+			}
+		}
+		// 地點排序結束
+
+		// ...角色讀取
 		players.push_back(Player(0, 0, 0));
+
+		// 角色排序開始
+		for (int i = 0; i < players.size()-1; i++) {
+			for (int j = 0; j < players.size() - 1; j++) {
+				if (players[j].playerID > players[j + 1].playerID) {
+					Player temp = players[j];
+					players[j] = players[j + 1];
+					players[j + 1] = temp;
+				}
+			}
+		}
+		// 角色排序結束
+		
 	}
 }
 
