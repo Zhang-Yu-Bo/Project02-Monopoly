@@ -1,4 +1,5 @@
 #include "Display.h"
+#include "Game.h"
 
 string Display::dice[6][3] = {
 		{"　　　"
@@ -199,11 +200,11 @@ string Display::chance[9] = {
 string Display::opportunity[9] = {
 		{"．－－－－－－．"},
 		{"｜　　　　　　｜"},
-		{"｜　機會　　　｜"},
-		{"｜ＣＨＡＮＣＥ｜"},
+		{"｜　命運　　　｜"},
+		{"｜ＯＰＰＯＲ－｜"},
+		{"｜ＴＵＮＩＴＹ｜"},
 		{"｜　　　　　　｜"},
-		{"｜　　！！！　｜"},
-		{"｜　　　　　　｜"},
+		{"｜　　？？？　｜"},
 		{"｜　　　　　　｜"},
 		{"．－－－－－－．"},
 };
@@ -263,6 +264,126 @@ void Display::printBoard()
 	}
 	//使整體畫面上提，不清楚自己註解掉下行跑一次看看就知道了
 	setConsoleCursorCoordinate(0, 0);
+}
+
+void Display::printEstate(const vector<Site> sites)
+{
+	for (int i = 0; i < 10; i++) {
+		setConsoleCursorCoordinate(0 + 14 * i, 0);
+		switch (sites[i].type) {
+		case 0:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(0 + 14 * i, j);
+				cout << start[j] << endl;
+			}
+			break;
+		case 1:
+			setConsoleCursorCoordinate(2 + 14 * i, 3);
+			cout << sites[i].name;
+			setConsoleCursorCoordinate(2 + 14 * i, 5);
+			cout << "$ " << sites[i].firstPrice;
+			break;
+		case -1:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(0 + 14 * i, j);
+				cout << opportunity[j] << endl;
+			}
+			break;
+		case -2:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(0 + 14 * i, j);
+				cout << chance[j] << endl;
+			}
+			break;
+		}
+	}
+	for (int i = 10; i < 15; i++) {
+		setConsoleCursorCoordinate(126, 8 + (i-10) );
+		switch (sites[i].type) {
+		case 0:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(126, 8 + (i-10) + j);
+				cout << start[j] << endl;
+			}
+			break;
+		case 1:
+			setConsoleCursorCoordinate(2 + 126, 11 + 8 * (i - 10));
+			cout << sites[i].name;
+			setConsoleCursorCoordinate(2 + 126, 13 + 8 * (i - 10));
+			cout << "$ " << sites[i].firstPrice;
+			break;
+		case -1:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(126, 8 + (i-10) + j);
+				cout << opportunity[j] << endl;
+			}
+			break;
+		case -2:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(126, 8 + (i-10) + j);
+				cout << chance[j] << endl;
+			}
+			break;
+		}
+	}
+	for (int i = 15; i < 24; i++) {
+		setConsoleCursorCoordinate(112 - 14 * (i - 15), 40);
+		switch (sites[i].type) {
+		case 0:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(112 - 14 * (i - 15), 40 + j);
+				cout << start[j] << endl;
+			}
+			break;
+		case 1:
+			setConsoleCursorCoordinate(2 + 112 - 14 * (i - 15), 43);
+			cout << sites[i].name;
+			setConsoleCursorCoordinate(2 + 112 - 14 * (i - 15), 45);
+			cout << "$ " << sites[i].firstPrice;
+			break;
+		case -1:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(112 - 14 * (i - 15), 40 + j);
+				cout << opportunity[j] << endl;
+			}
+			break;
+		case -2:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(112 - 14 * (i - 15), 40 + j);
+				cout << chance[j] << endl;
+			}
+			break;
+		}
+	}
+	for (int i = 24; i < 28; i++) {
+		setConsoleCursorCoordinate(0, 32 - 8 * (i-24));
+		switch (sites[i].type) {
+		case 0:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(0, 32 - 8 * (i-24) + j);
+				cout << start[j] << endl;
+			}
+			break;
+		case 1:
+			setConsoleCursorCoordinate(2, 35 - 8 * (i-24));
+			cout << sites[i].name;
+			setConsoleCursorCoordinate(2, 37 - 8 * (i-24));
+			cout << "$ " << sites[i].firstPrice;
+			break;
+		case -1:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(0, 32 - 8 * (i-24) + j);
+				cout << opportunity[j] << endl;
+			}
+			break;
+		case -2:
+			for (int j = 0; j < 9; j++) {
+				setConsoleCursorCoordinate(0, 32 - 8 * (i-24) + j);
+				cout << chance[j] << endl;
+			}
+			break;
+		}
+	}
 }
 
 void Display::printCurrentPlayer(int a)

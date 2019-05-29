@@ -12,7 +12,7 @@ public:
 	Site(int, string, int, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = -1);
 	//行為
 	
-protected:
+//protected:
 	// 變數
 	int location;
 	string name;
