@@ -8,6 +8,8 @@
 #include <vector>
 #include <fstream>
 
+
+
 #define KEYBOARD_UP 72
 #define KEYBOARD_DOWN 80
 #define KEYBOARD_LEFT 75
@@ -29,7 +31,7 @@ public:
 	bool isGameAlive();
 	void process();
 	//行為
-	//玩家移動call player裡的function
+	//玩家移動call player裡的function(v)
 	//踩到格子的行為
 		//有主地OR無主地OR功能格(機會、命運)
 		//無:是否購買(詢問)
