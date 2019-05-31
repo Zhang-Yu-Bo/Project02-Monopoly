@@ -31,19 +31,15 @@ bool Game::isGameAlive() {
 }
 
 void Game::process() {
-	//int command = 0;
 	int playerNum = players.size();
 
 	// 尋找是哪位玩家的回合
 	auto playerIter = players.begin();
 	vector<Site>::iterator siteIter;
-	for (; playerIter != players.end(); playerIter++)
-		if (playerIter->playerID == this->whosTurn)
-			break;
+
+	playerIter = players.begin() + (this->whosTurn % this->players.size());
 
 	while (this->gameLife) {
-		if (playerIter == players.end())
-			playerIter = players.begin();
 
 		// 玩家行為開始
 		if (!playerIter->cannotMove) {//可移動
@@ -51,7 +47,7 @@ void Game::process() {
 			int currentLocation = playerIter->location;
 
 			//判斷格子類型
-			switch (sites[currentLocation].type){
+			switch (sites[currentLocation].type) {
 			case START:
 				//do nothing for now
 				break;
@@ -59,8 +55,8 @@ void Game::process() {
 				//若達成買地產條件，詢問是否置產(無主地且玩家現金足夠)
 				if (!sites[currentLocation].owner && playerIter->money >= sites[currentLocation].firstPrice) {
 					//如果回答yes(尚未實作)
-					playerIter->ProchaseAnEstate(currentLocation,sites);
-					
+					playerIter->ProchaseAnEstate(currentLocation, sites);
+
 				}
 				else {//有主地
 					//若達成地產升級條件，詢問是否升級(自己地)
@@ -72,9 +68,9 @@ void Game::process() {
 
 					}
 				}
-				
+
 				break;
-			//若踩到機會、命運
+				//若踩到機會、命運
 			case CHANCE:
 				break;
 			case FORTUNE:
@@ -83,15 +79,17 @@ void Game::process() {
 				break;
 			}
 
-			
+
 
 		}
 		else {//不可移動
 			playerIter->cannotMove--;
 		}
-		
+
 
 		// 玩家行為結束
+
+		playerIter->money -= 100000;
 
 		// 破產判定開始
 		vector<Player> fakePlayers;
@@ -126,7 +124,11 @@ void Game::process() {
 		}
 		// 勝利判定結束
 
-		playerIter++;
+		// 尋找下個玩家
+		this->whosTurn = (this->whosTurn + 1) % (this->players.size());
+		playerIter = players.begin() + this->whosTurn;
+		
+
 	}
 	/*
 	while (command = _getch()) {
