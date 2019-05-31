@@ -18,8 +18,8 @@ void Game::start() {
 	system("mode con cols=220 lines=50");
 	Display::printBoard();
 	Display::printRightSpace();
-	Display::printCurrentPlayer(1);
-	Display::printRound(1);
+	Display::printCurrentPlayer(whosTurn+1);
+	Display::printRound(remainTurn);
 	Display::printEstate(sites);
 	this->openOptions();
 	system("pause");
@@ -187,6 +187,10 @@ void Game::loadMap() {
 		// 地點排序結束
 
 		// ...角色讀取
+		string temp;
+		inputFile >> temp;
+		inputFile >> whosTurn;
+		
 		players.push_back(Player(0, 0, 0));
 
 		// 角色排序開始
