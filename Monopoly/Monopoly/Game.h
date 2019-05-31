@@ -3,6 +3,7 @@
 #include "Site.h"
 #include "Player.h"
 #include <iostream>
+#include <sstream>
 #include <Windows.h>
 #include <conio.h>
 #include <vector>

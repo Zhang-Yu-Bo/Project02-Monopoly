@@ -190,8 +190,29 @@ void Game::loadMap() {
 		string temp;
 		inputFile >> temp;
 		inputFile >> whosTurn;
+		for (int i = 0; i < allPlayers; i++) {
+			stringstream ss;
+			int index,location, money;
+			int ownEstate;
+			int level;
+			inputFile >> index;
+			inputFile >> location;
+			inputFile >> money;
+			players.push_back(Player(index, location, money));
+			getline(inputFile, temp);
+			//inputFile >> temp;
+			ss << temp;
+			int count = 0;
+			while (ss >> ownEstate)
+			{
+				players[i].estate.push_back(sites[ownEstate]);
+				ss >> level;
+				players[i].estate[count].estateLevel = level;
+				count++;
+				//if (ss.fail()) break;//確認stringstream有正常流出，沒有代表空了
+			}
+		}
 		
-		players.push_back(Player(0, 0, 0));
 
 		// 角色排序開始
 		for (int i = 0; i < players.size()-1; i++) {

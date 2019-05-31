@@ -28,7 +28,7 @@ public:
 		owner = copy.owner;
 	}
 	//行為
-	
+
 	
 //protected:
 	// 變數
