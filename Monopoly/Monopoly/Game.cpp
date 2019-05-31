@@ -20,6 +20,7 @@ void Game::start() {
 	Display::printRightSpace();
 	Display::printCurrentPlayer(1);
 	Display::printRound(1);
+	Display::printEstate(sites);
 	this->openOptions();
 	system("pause");
 	//Display::rollDiceAnimate(2);
