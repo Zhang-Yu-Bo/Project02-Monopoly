@@ -25,6 +25,10 @@ void Game::start() {
 	Display::printEstate(sites);
 	Display::printPlayersStatus(players);
 	Display::printPlayerStep(players);
+	for (int i = 0; i < 28; i++) {
+		if(sites[i].owner!=-1)
+		Display::printOwnEstate(sites[i], players);
+	}
 	this->openOptions();
 	system("pause");
 	//Display::rollDiceAnimate(2);
@@ -218,8 +222,10 @@ void Game::loadMap() {
 			while (ss >> ownEstate)
 			{
 				players[i].estate.push_back(sites[ownEstate]);
+				sites[ownEstate].owner = i;
 				ss >> level;
 				players[i].estate[count].estateLevel = level;
+				sites[ownEstate].estateLevel = level;
 				count++;
 				//if (ss.fail()) break;//確認stringstream有正常流出，沒有代表空了
 			}

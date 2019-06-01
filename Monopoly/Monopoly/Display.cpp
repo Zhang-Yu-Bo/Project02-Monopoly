@@ -535,7 +535,7 @@ void Display::printPlayerStep(const vector<Player>& players)
 
 void Display::printOwnEstate(const Site& site, const vector<Player> & players)
 {
-	int x, y;
+	int x = 0, y = 0;
 	if (site.location >= 0 && site.location < 10) {
 		x = site.location;
 		y = 0;
@@ -552,13 +552,26 @@ void Display::printOwnEstate(const Site& site, const vector<Player> & players)
 		x = 0;
 		y = (28 - site.location);
 	}
-	x *= 7;
+	x *= 14;
 	y *= 8;
-	x++;
+	x += 2;
 	y++;
 	setConsoleCursorCoordinate(x, y);
-	setColorForPlayer(true, players[site.owner].playerID);
-	cout << "+";
+	setColorForPlayer(false, players[site.owner].playerID);
+	switch (site.estateLevel) {
+	case 0:
+		cout << star[0];
+		break;
+	case 1:
+		cout << star[1];
+		break;
+	case 2:
+		cout << star[2];
+		break;
+	case 3:
+		cout << star[3];
+		break;
+	}
 	setColorForPlayer();
 }
 
