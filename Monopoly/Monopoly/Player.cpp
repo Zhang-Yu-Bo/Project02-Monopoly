@@ -36,7 +36,7 @@ void Player::UpgradeAnEstate(const int position, vector<Site>&sites){
 
 }
 
-void Player::PayForTheToll(const int position, const vector<Site>& sites){
+void Player::PayForTheToll(const int position, const vector<Site>& sites ,vector<Player>& players){
 	int tax = 0;
 	switch (sites[position].estateLevel){
 	case 0:
@@ -54,5 +54,7 @@ void Player::PayForTheToll(const int position, const vector<Site>& sites){
 	default:
 		break;
 	}
-	money -= tax;
+	this->money -= tax;
+	players[sites[position].owner].money += tax;
+	
 }

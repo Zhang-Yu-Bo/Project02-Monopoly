@@ -76,7 +76,7 @@ void Game::process() {
 					}
 					//若踩到其他玩家之地產，進行付費(他人地)
 					else if (sites[currentLocation].owner != playerIter->playerID) {
-						playerIter->PayForTheToll(currentLocation, sites);
+						playerIter->PayForTheToll(currentLocation, sites,players);
 					}
 				}
 				break;

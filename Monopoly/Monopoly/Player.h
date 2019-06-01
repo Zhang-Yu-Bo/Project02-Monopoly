@@ -24,7 +24,7 @@ public:
 	void Move(int);//玩家移動(傳入移動步數)
 	void ProchaseAnEstate(const int, vector<Site>&);//玩家購買房產(傳入房產地點,game裡的vector<Sites>&並一併修改)
 	void UpgradeAnEstate(const int, vector<Site>&);//玩家升級房產(傳入房產地點,game裡的vector<Sites>&並一併修改)
-	void PayForTheToll(const int, const vector<Site>&);
+	void PayForTheToll(const int, const vector<Site>&, vector<Player>&);
 	///踩過起點是否給錢
 		//路障(道具)放置
 };
