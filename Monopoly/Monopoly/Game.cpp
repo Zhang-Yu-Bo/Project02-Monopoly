@@ -21,6 +21,8 @@ void Game::start() {
 	Display::printCurrentPlayer(whosTurn+1);
 	Display::printRound(remainTurn);
 	Display::printEstate(sites);
+	Display::printPlayersstatus(players);
+	Display::printPlayerStep(players);
 	this->openOptions();
 	system("pause");
 	//Display::rollDiceAnimate(2);
@@ -229,6 +231,7 @@ void Game::loadMap() {
 		// ¨¤¦â±Æ§Çµ²§ô
 		
 	}
+	inputFile.close();
 }
 
 void Game::openOptions() {

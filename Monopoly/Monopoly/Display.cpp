@@ -181,8 +181,8 @@ string Display::start[9] = {
 		{"｜　起點　　　｜"},
 		{"｜ＳＴＡＲＴ　｜"},
 		{"｜　　　　　　｜"},
-		{"｜↓　　　　　｜"},
-		{"｜　　ＧＯ！　｜"},
+		{"｜↓　　ＧＯ！｜"},
+		{"｜　　　　　　｜"},
 		{"｜　　　　　　｜"},
 		{"．－－－－－－．"},
 };
@@ -266,7 +266,7 @@ void Display::printBoard()
 	setConsoleCursorCoordinate(0, 0);
 }
 
-void Display::printEstate(const vector<Site> sites)
+void Display::printEstate(const vector<Site>& sites)
 {
 	for (int i = 0; i < 10; i++) {
 		setConsoleCursorCoordinate(0 + 14 * i, 0);
@@ -396,6 +396,15 @@ void Display::printCurrentPlayer(int a)
 	setConsoleCursorCoordinate(0, 0);
 }
 
+void Display::printPlayersstatus(const vector<Player> &players)
+{
+	int coordinate[4][2] = { {148,5},{186,5},{148,13},{186,13} };
+	for (int i = 0; i < players.size(); i++) {
+		setConsoleCursorCoordinate(coordinate[i][0],coordinate[i][1]);
+		cout << setw(10) << left << players[i].money  << endl;
+	}
+}
+
 void Display::printRound(int a)
 {
 	int x = a / 10;
@@ -447,6 +456,38 @@ void Display::printMainMenu() {
 	cout << "讀取地圖";
 	setConsoleCursorCoordinate(2, 2);
 	cout << "結束遊戲";
+}
+
+void Display::printPlayerStep(const vector<Player>& players)
+{
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < players.size(); j++) {
+			setConsoleCursorCoordinate(4 + 14 * i + 2 * j, 7);
+			if (i == players[j].location) cout << j + 1 << endl;
+			else cout << " " << endl;
+		}
+	}
+	for (int i = 10; i < 15; i++) {
+		for (int j = 0; j < players.size(); j++) {
+			setConsoleCursorCoordinate(130 + 2 * j, 15 + (i - 10) * 8);
+			if (i == players[j].location) cout << j + 1 << endl;
+			else cout << " " << endl;
+		}
+	}
+	for (int i = 15; i < 24; i++) {
+		for (int j = 0; j < players.size(); j++) {
+			setConsoleCursorCoordinate(116 - 14 * (i - 15) + 2 * j, 47);
+			if (i == players[j].location) cout << j + 1 << endl;
+			else cout << " " << endl;
+		}
+	}
+	for (int i = 24; i < 28; i++) {
+		for (int j = 0; j < players.size(); j++) {
+			setConsoleCursorCoordinate(4 + 2 * j, 39 - 8 * (i - 24));
+			if (i == players[j].location) cout << j + 1 << endl;
+			else cout << " " << endl;
+		}
+	}
 }
 
 void Display::cursorVisiable(bool flag) {

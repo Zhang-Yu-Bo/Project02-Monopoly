@@ -7,6 +7,8 @@
 #include <Windows.h>
 #include <iostream>
 #include <vector>
+#include <iomanip>
+#include "Player.h"
 #include "Site.h"
 
 using namespace std;
@@ -18,11 +20,13 @@ public:
 	static void SetColor(int, int);
 	static void rollDiceAnimate(int a);
 	static void printBoard();
-	static void printEstate(vector<Site>);
+	static void printEstate(const vector<Site>&);
 	static void printCurrentPlayer(int a);
+	static void printPlayersstatus(const vector<Player>&);
 	static void printRound(int a);
 	static void printRightSpace();
 	static void printMainMenu();
+	static void printPlayerStep(const vector<Player>&);
 	static void setConsoleCursorCoordinate(int = 0, int = 0);
 	static void cursorVisiable(bool);
 	static void showGameOptions();
