@@ -15,13 +15,15 @@ Game::Game(string fileName = "basemap") {
 }
 
 void Game::start() {
+	//system("color 70");
+	Display::setColor();
 	system("mode con cols=220 lines=50");
 	Display::printBoard();
-	Display::printRightSpace();
+	Display::printRightSpace(allPlayers);
 	Display::printCurrentPlayer(whosTurn+1);
 	Display::printRound(remainTurn);
 	Display::printEstate(sites);
-	Display::printPlayersstatus(players);
+	Display::printPlayersStatus(players);
 	Display::printPlayerStep(players);
 	this->openOptions();
 	system("pause");

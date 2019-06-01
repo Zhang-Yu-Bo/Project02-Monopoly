@@ -1,6 +1,7 @@
 #include "Display.h"
 #include "Game.h"
 
+
 string Display::dice[6][3] = {
 		{"　　　"
 		,"　●　"
@@ -72,6 +73,12 @@ string Display::bigNumber[10][5] = {
 		,"■■■"
 		,"　　■"
 		,"　　■"}
+};
+string Display::star[4] = {
+	"　　　　　　",
+	"　　 ★ 　　",
+	"　　★★　　",
+	"　 ★★★ 　"
 };
 string Display::board[49] = {
 		{"．－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－．"},
@@ -227,6 +234,7 @@ string Display::option[17] = {
 	{"■　　　　　　　　　　■"},
 	{"■■■■■■■■■■■■"}
 };
+string Display::number[4] = { "１","２" ,"３" ,"４" };
 
 CONSOLE_CURSOR_INFO Display::cci;
 
@@ -234,11 +242,35 @@ Display::Display() {
 	srand(time(NULL));
 }
 
-void Display::SetColor(int f = 7, int b = 0)
+void Display::setColor(const int f, const int b)
 {
-	unsigned short ForeColor = f + 16 * b;
 	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hCon, ForeColor);
+	SetConsoleTextAttribute(hCon, f|b);
+}
+
+void Display::setColorForPlayer(const bool text, const int index)
+{
+	switch (index) {
+	case 0 :
+		if (text) setColor(FOREGROUND_RED);
+		else setColor((FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED), BACKGROUND_RED);
+		break;
+	case 1:
+		if (text) setColor(FOREGROUND_BLUE);
+		else setColor((FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED), BACKGROUND_BLUE);
+		break;
+	case 2:
+		if (text) setColor(FOREGROUND_GREEN);
+		else setColor((FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED), BACKGROUND_GREEN);
+		break;
+	case 3:
+		if (text) setColor((FOREGROUND_BLUE | FOREGROUND_GREEN));
+		else setColor((FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED), (BACKGROUND_BLUE| BACKGROUND_GREEN));
+		break;
+	default:
+		setColor();
+		break;
+	}
 }
 
 
@@ -396,7 +428,7 @@ void Display::printCurrentPlayer(int a)
 	setConsoleCursorCoordinate(0, 0);
 }
 
-void Display::printPlayersstatus(const vector<Player> &players)
+void Display::printPlayersStatus(const vector<Player> &players)
 {
 	int coordinate[4][2] = { {148,5},{186,5},{148,13},{186,13} };
 	for (int i = 0; i < players.size(); i++) {
@@ -422,14 +454,20 @@ void Display::printRound(int a)
 	setConsoleCursorCoordinate(0, 0);
 }
 
-void Display::printRightSpace()
+void Display::printRightSpace(int allplayers)
 {
-	setConsoleCursorCoordinate(142, 0);
+	int coordinate[4][2] = { {144,3},{182,3},{144,11},{182,11} };
 	for (int i = 0; i < 49; i++)
 	{
+		setConsoleCursorCoordinate(142, i);
 		cout << rightSpace[i];
-		setConsoleCursorCoordinate(142, i + 1);
 	}
+	for(int i = 0; i < allplayers; i++) {
+		setColorForPlayer(1, i);
+		setConsoleCursorCoordinate(coordinate[i][0], coordinate[i][1]);
+		cout << "●　" << number[i];
+	}
+	setColorForPlayer();
 	//使整體畫面上提，不清楚自己註解掉下行跑一次看看就知道了
 	setConsoleCursorCoordinate(0, 0);
 }
@@ -463,31 +501,65 @@ void Display::printPlayerStep(const vector<Player>& players)
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < players.size(); j++) {
 			setConsoleCursorCoordinate(4 + 14 * i + 2 * j, 7);
-			if (i == players[j].location) cout << j + 1 << endl;
+			setColorForPlayer(1, j);
+			if (i == players[j].location) cout << number[j] << endl;
 			else cout << " " << endl;
 		}
 	}
 	for (int i = 10; i < 15; i++) {
 		for (int j = 0; j < players.size(); j++) {
 			setConsoleCursorCoordinate(130 + 2 * j, 15 + (i - 10) * 8);
-			if (i == players[j].location) cout << j + 1 << endl;
+			setColorForPlayer(1, j);
+			if (i == players[j].location) cout << number[j] << endl;
 			else cout << " " << endl;
 		}
 	}
 	for (int i = 15; i < 24; i++) {
 		for (int j = 0; j < players.size(); j++) {
 			setConsoleCursorCoordinate(116 - 14 * (i - 15) + 2 * j, 47);
-			if (i == players[j].location) cout << j + 1 << endl;
+			setColorForPlayer(1, j);
+			if (i == players[j].location) cout << number[j] << endl;
 			else cout << " " << endl;
 		}
 	}
 	for (int i = 24; i < 28; i++) {
 		for (int j = 0; j < players.size(); j++) {
 			setConsoleCursorCoordinate(4 + 2 * j, 39 - 8 * (i - 24));
-			if (i == players[j].location) cout << j + 1 << endl;
+			setColorForPlayer(1, j);
+			if (i == players[j].location) cout << number[j] << endl;
 			else cout << " " << endl;
 		}
 	}
+	setColorForPlayer();
+}
+
+void Display::printOwnEstate(const Site& site, const vector<Player> & players)
+{
+	int x, y;
+	if (site.location >= 0 && site.location < 10) {
+		x = site.location;
+		y = 0;
+	}
+	else if (site.location < 15) {
+		x = 9;
+		y = site.location - 9;
+	}
+	else if (site.location < 24) {
+		x = 9 - (24 - site.location);
+		y = 5;
+	}
+	else if (site.location < 28) {
+		x = 0;
+		y = (28 - site.location);
+	}
+	x *= 7;
+	y *= 8;
+	x++;
+	y++;
+	
+	setColorForPlayer(true, players[site.owner].playerID);
+	cout << "+";
+	setColorForPlayer();
 }
 
 void Display::cursorVisiable(bool flag) {
@@ -497,10 +569,10 @@ void Display::cursorVisiable(bool flag) {
 }
 
 void Display::showGameOptions() {
-	SetColor(240);
+	setColor(240);
 	for (int i = 0; i < 17; i++) {
 		setConsoleCursorCoordinate(8, 28 + i);
 		cout << option[i] << endl;
 	}
-	SetColor(7);
+	setColor(7);
 }

@@ -17,16 +17,18 @@ class Display
 {
 public:
 	Display();
-	static void SetColor(int, int);
+	static void setColor(const int = 0, const int = (BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED));
+	static void setColorForPlayer(const bool = true, const int = -1); //true 改字體顏色 false改背景顏色
 	static void rollDiceAnimate(int a);
 	static void printBoard();
 	static void printEstate(const vector<Site>&);
 	static void printCurrentPlayer(int a);
-	static void printPlayersstatus(const vector<Player>&);
+	static void printPlayersStatus(const vector<Player>&);
 	static void printRound(int a);
-	static void printRightSpace();
+	static void printRightSpace(int allplayers);
 	static void printMainMenu();
 	static void printPlayerStep(const vector<Player>&);
+	static void printOwnEstate(const Site&, const vector<Player>&);
 	static void setConsoleCursorCoordinate(int = 0, int = 0);
 	static void cursorVisiable(bool);
 	static void showGameOptions();
@@ -41,6 +43,8 @@ private:
 	static string opportunity[9];
 	static string option[17];
 	static CONSOLE_CURSOR_INFO cci;
+	static string number[4];
+	static string star[4];
 };
 
 #endif // !_DISPLAY_H_
