@@ -5,10 +5,23 @@ Site::Site(int location, string name, int type, int firstPrice, int tolls, int f
 	this->name = name;
 	this->type = type;
 	this->firstPrice = firstPrice;
-	this->tolls = tolls;
-	this->firstTolls = firstPrice;
-	this->secondTolls = secondTolls;
-	this->thirdTolls = thirdTolls;
+	this->initialToll = tolls;
+	this->firstStageToll = firstPrice;
+	this->secondStageToll = secondTolls;
+	this->thirdStageToll = thirdTolls;
 	this->estateLevel = estateLevel;
 	this->owner = owner;
+}
+
+Site::Site(const Site& copy){
+	location = copy.location;
+	name = copy.name;
+	type = copy.type;
+	firstPrice = copy.firstPrice;
+	initialToll = copy.initialToll;
+	firstStageToll = copy.firstStageToll;
+	secondStageToll = copy.secondStageToll;
+	thirdStageToll = copy.thirdStageToll;
+	estateLevel = copy.estateLevel;
+	owner = copy.owner;
 }

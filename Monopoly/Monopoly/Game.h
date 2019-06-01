@@ -36,10 +36,11 @@ public:
 	//踩到格子的行為
 		//有主地OR無主地OR功能格(機會、命運)
 		//無:是否購買(詢問)
-			//是:call player裡的function
+			//是:call player裡的function(v)
 		//有:誰的
-			//別人的:付錢
-			//自己的:是否升級(或已最高等不能升級)(詢問)call player裡的function
+			//別人的:付錢(v)
+			//自己的:是否升級(或已最高等不能升級)(詢問)
+				//call player裡的function(v)
 		//功能格:做事
 private:
 	// ...內部函式

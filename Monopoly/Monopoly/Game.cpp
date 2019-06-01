@@ -46,8 +46,14 @@ void Game::process() {
 	while (this->gameLife) {
 
 		// 玩家行為開始
-		if (!playerIter->cannotMove) {//可移動
-			playerIter->Move(playerIter->RollADice());//骰骰子並移動
+		if (!playerIter->cannotMove) {//可移動(回合沒被跳過)
+			if (!playerIter->barrier || !playerIter->controlledDice) {//擁有道具的情況
+				//詢問並顯示是否使用道具
+				//路障:剩餘數量N
+				//遙控骰子:剩餘數量N
+			}
+			int point = playerIter->RollADice();
+			playerIter->Move(point);//骰骰子並移動
 			int currentLocation = playerIter->location;
 
 			//判斷格子類型
@@ -56,23 +62,23 @@ void Game::process() {
 				//do nothing for now
 				break;
 			case ESTATE:
-				//若達成買地產條件，詢問是否置產(無主地且玩家現金足夠)
-				if (!sites[currentLocation].owner && playerIter->money >= sites[currentLocation].firstPrice) {
-					//如果回答yes(尚未實作)
-					playerIter->ProchaseAnEstate(currentLocation, sites);
-
+				if (!sites[currentLocation].owner) {//無主地
+					if (playerIter->money >= sites[currentLocation].firstPrice) {//若達成買地產條件，詢問是否置產(玩家現金足夠)
+						//如果回答yes(尚未實作)
+						playerIter->ProchaseAnEstate(currentLocation, sites);
+					}
 				}
 				else {//有主地
 					//若達成地產升級條件，詢問是否升級(自己地)
 					if (sites[currentLocation].owner == playerIter->playerID && sites[currentLocation].estateLevel < 3) {
-						playerIter->UpgradeAnEstate(currentLocation, sites);//尚未實作
+						//如果回答yes(尚未實作)
+						playerIter->UpgradeAnEstate(currentLocation, sites);
 					}
 					//若踩到其他玩家之地產，進行付費(他人地)
 					else if (sites[currentLocation].owner != playerIter->playerID) {
-
+						playerIter->PayForTheToll(currentLocation, sites);
 					}
 				}
-
 				break;
 				//若踩到機會、命運
 			case CHANCE:
@@ -204,7 +210,7 @@ void Game::loadMap() {
 			inputFile >> index;
 			inputFile >> location;
 			inputFile >> money;
-			players.push_back(Player(index, location, money));
+			players.push_back(Player(index, location, money, 0, 0, 0));
 			getline(inputFile, temp);
 			//inputFile >> temp;
 			ss << temp;
