@@ -556,7 +556,7 @@ void Display::printOwnEstate(const Site& site, const vector<Player> & players)
 	y *= 8;
 	x++;
 	y++;
-	
+	setConsoleCursorCoordinate(x, y);
 	setColorForPlayer(true, players[site.owner].playerID);
 	cout << "+";
 	setColorForPlayer();
