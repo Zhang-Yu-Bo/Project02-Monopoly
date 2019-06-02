@@ -6,7 +6,7 @@ Site::Site(int location, string name, int type, int firstPrice, int tolls, int f
 	this->type = type;
 	this->firstPrice = firstPrice;
 	this->initialToll = tolls;
-	this->firstStageToll = firstPrice;
+	this->firstStageToll = firstTolls;
 	this->secondStageToll = secondTolls;
 	this->thirdStageToll = thirdTolls;
 	this->estateLevel = estateLevel;

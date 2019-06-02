@@ -14,7 +14,7 @@ int main(void) {
 		string fileName = "basemap";
 		if (nextStep == 2) {
 			// ...讀取地圖
-			getline(cin, fileName);
+			cin >> fileName;
 		}
 		if (fileName != "exit") {
 			// 開始遊戲
@@ -23,6 +23,7 @@ int main(void) {
 			while (newGame.isGameAlive()) {
 				newGame.process();
 			}
+			newGame.~Game();
 		}
 	}
 	return 0;
