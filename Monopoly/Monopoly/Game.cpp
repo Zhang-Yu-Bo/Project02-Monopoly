@@ -92,6 +92,9 @@ void Game::process() {
 		/// 勝負判定結束
 
 		/// 全畫面更新
+		Display::setColor();
+		system("cls");
+		Display::printBoard();
 		Display::printRightSpace(allPlayers);
 		Display::printCurrentPlayer(whosTurn + 1);
 		Display::printRound(remainTurn);
@@ -158,9 +161,9 @@ void Game::process() {
 
 						Display::setConsoleCursorCoordinate(144, 30);
 						cout << "【" << sites[currentLocation].name << "】目前沒有地主，想成為它（她）的主人嗎?(y/n)：";
-						char temp;
+						string temp;
 						cin >> temp;
-						if (temp == 'y' || temp == 'Y') {
+						if (temp == "y" || temp == "Y") {
 							playerIter->ProchaseAnEstate(currentLocation, sites);
 
 							for (int i = 0; i < 28; i++) {
@@ -184,9 +187,9 @@ void Game::process() {
 						
 						Display::setConsoleCursorCoordinate(144, 30);
 						cout << "你是【" << sites[currentLocation].name << "】的Master，想讓它（她）升級嗎?(y/n)：";
-						char temp;
+						string temp;
 						cin >> temp;
-						if (temp == 'y' || temp == 'Y') {
+						if (temp == "y" || temp == "Y") {
 							playerIter->UpgradeAnEstate(currentLocation, sites);
 
 							for (int i = 0; i < 28; i++) {
