@@ -29,7 +29,7 @@ int MainMenu::showMenu() {
 				// 讀取地圖
 				system("cls");
 				Display::setConsoleCursorCoordinate(0, 0);
-				cout << "請輸入地圖檔名（無須打副檔名、輸入exit返回）：";
+				cout << "請輸入地圖檔名（無須打副檔名、輸入exit返回）：\n";
 				Display::setConsoleCursorCoordinate(0, 1);
 				return 2;
 			}

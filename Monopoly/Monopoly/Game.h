@@ -28,6 +28,7 @@ class Game
 public:
 	// ¶aπœ¿…¶W
 	Game(string);
+	~Game();
 	void start();
 	bool isGameAlive();
 	void process();

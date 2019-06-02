@@ -9,9 +9,21 @@ Game::Game(string fileName = "basemap") {
 	this->mapFileName = fileName;
 	this->gameLife = true;
 	this->whosTurn = 0;
+	this->allPlayers = 0;
+	this->mapName = "";
+	this->remainTurn = 0;
 
 	// loading Map from file
 	this->loadMap();
+}
+
+Game::~Game() {
+	this->allPlayers = 0;
+	this->mapName = "";
+	this->mapFileName = "";
+	this->gameLife = false;
+	this->whosTurn = 0;
+	this->remainTurn = 0;
 }
 
 void Game::start() {
@@ -29,9 +41,6 @@ void Game::start() {
 		if (sites[i].owner != -1)
 			Display::printOwnEstate(sites[i], players);
 	}
-	//this->openOptions();
-	//system("pause");
-	//Display::rollDiceAnimate(2);
 }
 
 bool Game::isGameAlive() {
@@ -55,7 +64,34 @@ void Game::process() {
 		//Display::setConsoleCursorCoordinate(210, 40);
 		//cout << "０";
 
-		// 全畫面更新
+		/// 確認玩家數量&剩餘回合
+		playerNum = 0;
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].money >= 0) {
+				playerNum++;
+			}
+		}
+		/// 勝負判定開始
+		if (playerNum == 1 || this->remainTurn <= 0) {
+			Display::setColor(7, 0);
+			system("cls");
+			system("mode con cols=50 lines=10");
+			Player winner(0, 0, 0, 0, 0, 0);
+			int max = 0;
+			for (int i = 0; i < players.size(); i++) {
+				if (players[i].money > max) {
+					winner = players[i];
+					max = players[i].money;
+				}
+			}
+			cout << "Player" << winner.playerID << " is winner.\n";
+			this->gameLife = false;
+			system("pause");
+			return;
+		}
+		/// 勝負判定結束
+
+		/// 全畫面更新
 		Display::printRightSpace(allPlayers);
 		Display::printCurrentPlayer(whosTurn + 1);
 		Display::printRound(remainTurn);
@@ -77,6 +113,7 @@ void Game::process() {
 				//遙控骰子:剩餘數量N
 			}
 
+			/// 等待輸入開始
 			Display::setConsoleCursorCoordinate(144, 26);
 			cout << "請按任意鍵骰動骰子．．．";
 			while (commandPress = _getch()) {
@@ -92,18 +129,18 @@ void Game::process() {
 					break;
 				}
 			}
+			/// 等待輸入結束
 
 			int point = playerIter->RollADice();
-			// 顯示骰子動畫
-			Display::rollDiceAnimate(point);
-			Display::clearPlayLog();
+			Display::rollDiceAnimate(point);									// 顯示骰子動畫
+			Display::clearPlayLog();											// 清除PlayLog
 			cout << "現在骰到了 " << point;
 			Display::setConsoleCursorCoordinate(144, 27);
 			cout << "玩家 " << playerIter->playerID + 1 << "從【" << sites[playerIter->location].name << "】";
 			Display::setConsoleCursorCoordinate(144, 28);
 			cout << "移動到";
 
-			playerIter->Move(point);					// 移動玩家
+			playerIter->Move(point);											// 移動玩家
 			int currentLocation = playerIter->location;
 
 			Display::setConsoleCursorCoordinate(150, 28);
@@ -188,15 +225,13 @@ void Game::process() {
 			default:
 				break;
 			}
-
-
-
 		}
 		else {//不可移動
 			playerIter->cannotMove--;
 		}
 		// 玩家行為結束
 
+		/// 等待輸入開始
 		Display::setConsoleCursorCoordinate(144, 40);
 		cout << "請按任意鍵繼續．．．";
 		while (commandPress = _getch()) {
@@ -212,50 +247,27 @@ void Game::process() {
 				break;
 			}
 		}
+		/// 等待輸入結束
 
 		// 破產測試
 		if (playerIter->playerID==0&&playerIter->money>0)
 			playerIter->money -= 100000;
 
-		// 破產判定開始
+		/// 破產判定開始
 		for (int i = 0; i < players.size(); i++) {
 			if (players[i].money < 0) {
+				// 刪除地點的擁有者
 				for (int j = 0; j < players[i].estate.size(); j++) {
 					sites[players[i].estate[j].location].estateLevel = 0;
 					sites[players[i].estate[j].location].owner = -1;
 				}
+				// 刪除破產者的擁有地
 				players[i].estate.erase(players[i].estate.begin(), players[i].estate.end());
 			}
 		}
-		// 破產判定結束
+		/// 破產判定結束
 
-		// 勝利判定開始
-		playerNum = 0;
-		for (int i = 0; i < players.size(); i++) {
-			if (players[i].money >= 0) {
-				playerNum++;
-			}
-		}
-		if (playerNum == 1 || this->remainTurn == 1) {
-			Display::setColor(7, 0);
-			system("cls");
-			Player winner(0, 0, 0, 0, 0, 0);
-			int max = 0;
-			for (int i = 0; i < players.size(); i++) {
-				if (players[i].money > max) {
-					winner = players[i];
-					max = players[i].money;
-				}
-			}
-				
-			cout << "Player" << winner.playerID << " is winner.\n";
-			this->gameLife = false;
-			system("pause");
-			return;
-		}
-		// 勝利判定結束
-
-		// 尋找下個玩家
+		/// 尋找下個玩家開始
 		do {
 			this->whosTurn++;
 			if (this->whosTurn % this->players.size() == 0) {
@@ -264,10 +276,9 @@ void Game::process() {
 			}
 			playerIter = players.begin() + this->whosTurn;
 		} while (playerIter->money < 0);
-		
-
-
+		/// 尋找下個玩家結束
 	}
+
 }
 
 void Game::loadMap() {
@@ -345,7 +356,7 @@ void Game::loadMap() {
 		}
 
 
-		// 角色排序開始
+		/// 角色排序開始
 		for (int i = 0; i < players.size() - 1; i++) {
 			for (int j = 0; j < players.size() - 1; j++) {
 				if (players[j].playerID > players[j + 1].playerID) {
@@ -355,7 +366,7 @@ void Game::loadMap() {
 				}
 			}
 		}
-		// 角色排序結束
+		/// 角色排序結束
 
 	}
 	inputFile.close();
@@ -382,6 +393,7 @@ int Game::openOptions() {
 		}
 		else if (commandPress == KEYBOARD_ENTER) {
 			if (y == 32) {
+				/// 繼續遊戲
 				Display::setColor();
 				system("cls");
 				Display::printBoard();
@@ -398,9 +410,73 @@ int Game::openOptions() {
 				return 0;
 			}
 			else if (y == 36) {
+				/// 儲存遊戲
+				// 清除畫面
+				Display::setColor(7, 0);
+				system("cls");
+				system("mode con cols=50 lines=10");
+				Display::setConsoleCursorCoordinate(0, 0);
+				cout << "請輸入欲儲存檔名(輸入exit返回)：\n";
+				string saveFileName = "";
+				cin >> saveFileName;
+
+				if (saveFileName != "exit") {
+					fstream output("Map/" + saveFileName + ".txt",ios::out);
+					if (output.is_open()) {
+						int playerNum = 0;
+						for (int i = 0; i < players.size(); i++) {
+							if (players[i].money >= 0) {
+								playerNum++;
+							}
+						}
+						output << saveFileName << " " << this->remainTurn << " " << playerNum << endl;
+
+						for (int i = 0; i < sites.size(); i++) {
+							output << setw(2) << setfill('0') << i << " " << sites[i].name << " " << sites[i].type;
+							if (sites[i].type == 1) {
+								output << " " << sites[i].firstPrice
+									<< " " << sites[i].initialToll
+									<< " " << sites[i].firstStageToll
+									<< " " << sites[i].secondStageToll
+									<< " " << sites[i].thirdStageToll;
+							}
+							output << endl;
+						}
+						output << "playerstate " << this->whosTurn << endl;
+						for (int i = 0; i < this->players.size(); i++) {
+							output << this->players[i].playerID
+								<< " " << setw(2) << setfill('0') << this->players[i].location;
+							output << " " << this->players[i].money;
+							for (int j = 0; j < this->players[i].estate.size(); j++) {
+								output << " " << setw(2) << setfill('0') << this->players[i].estate[j].location;
+								output << " " << this->players[i].estate[j].estateLevel;
+							}
+							output << endl;
+						}
+
+						output.close();
+					}
+				}
+				
+				Display::setColor();
+				system("cls");
+				system("mode con cols=220 lines=50");
+				Display::printBoard();
+				Display::printRightSpace(allPlayers);
+				Display::printCurrentPlayer(whosTurn + 1);
+				Display::printRound(remainTurn);
+				Display::printEstate(sites);
+				Display::printPlayersStatus(players);
+				Display::printPlayerStep(players);
+				for (int i = 0; i < 28; i++) {
+					if (sites[i].owner != -1)
+						Display::printOwnEstate(sites[i], players);
+				}
+
 				return 1;
 			}
 			else if (y==40) {
+				/// 結束遊戲
 				this->gameLife = false;
 				Display::setColor(7, 0);
 				return 2;
