@@ -598,3 +598,14 @@ void Display::showGameOptions() {
 	}
 	setColor(7);
 }
+
+void Display::clearPlayLog() {
+	for (int i = 0; i < 15; i++) {
+		setConsoleCursorCoordinate(144, 26 + i);
+		for (int j = 0; j < 34; j++) {
+			// 34*2
+			cout << "¡@";
+		}
+	}
+	Display::setConsoleCursorCoordinate(144, 26);
+}

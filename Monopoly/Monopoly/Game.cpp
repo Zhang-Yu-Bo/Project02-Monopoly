@@ -1,4 +1,4 @@
-#include "Game.h"
+ï»¿#include "Game.h"
 
 Game::Game(string fileName = "basemap") {
 
@@ -29,8 +29,8 @@ void Game::start() {
 		if(sites[i].owner!=-1)
 		Display::printOwnEstate(sites[i], players);
 	}
-	this->openOptions();
-	system("pause");
+	//this->openOptions();
+	//system("pause");
 	//Display::rollDiceAnimate(2);
 }
 
@@ -40,8 +40,9 @@ bool Game::isGameAlive() {
 
 void Game::process() {
 	int playerNum = players.size();
+	int commandPress = 0;
 
-	// ´M§ä¬O­ş¦ìª±®aªº¦^¦X
+	// å°‹æ‰¾æ˜¯å“ªä½ç©å®¶çš„å›åˆ
 	auto playerIter = players.begin();
 	vector<Site>::iterator siteIter;
 
@@ -49,42 +50,73 @@ void Game::process() {
 
 	while (this->gameLife) {
 
-		// ª±®a¦æ¬°¶}©l
-		if (!playerIter->cannotMove) {//¥i²¾°Ê(¦^¦X¨S³Q¸õ¹L)
-			if (!playerIter->barrier || !playerIter->controlledDice) {//¾Ö¦³¹D¨ãªº±¡ªp
-				//¸ß°İ¨ÃÅã¥Ü¬O§_¨Ï¥Î¹D¨ã
-				//¸ô»Ù:³Ñ¾l¼Æ¶qN
-				//»»±±»ë¤l:³Ñ¾l¼Æ¶qN
-			}
-			int point = playerIter->RollADice();
-			playerIter->Move(point);//»ë»ë¤l¨Ã²¾°Ê
-			int currentLocation = playerIter->location;
+		//Display::setConsoleCursorCoordinate(144, 26);
+		//cout << "é€™æ˜¯æ¸¬è©¦";
+		//Display::setConsoleCursorCoordinate(210, 40);
+		//cout << "ï¼";
+		Display::clearPlayLog();
 
-			//§PÂ_®æ¤lÃş«¬
+		// ç©å®¶è¡Œç‚ºé–‹å§‹
+		if (!playerIter->cannotMove) {//å¯ç§»å‹•(å›åˆæ²’è¢«è·³é)
+			
+			if (!playerIter->barrier || !playerIter->controlledDice) {//æ“æœ‰é“å…·çš„æƒ…æ³
+				//è©¢å•ä¸¦é¡¯ç¤ºæ˜¯å¦ä½¿ç”¨é“å…·
+				//è·¯éšœ:å‰©é¤˜æ•¸é‡N
+				//é™æ§éª°å­:å‰©é¤˜æ•¸é‡N
+			}
+
+			cout << "è«‹æŒ‰ä»»æ„éµéª°å‹•éª°å­ï¼ï¼ï¼";
+			while (commandPress = _getch()) {
+				if (commandPress == KEYBOARD_ESCAPE) {
+					this->openOptions();
+				}
+				else {
+					break;
+				}
+			}
+
+			int point = playerIter->RollADice();
+			// é¡¯ç¤ºéª°å­å‹•ç•«
+			Display::rollDiceAnimate(point);
+			Display::clearPlayLog();
+			cout << "ç¾åœ¨éª°åˆ°äº† " << point;
+			Display::setConsoleCursorCoordinate(144, 27);
+			cout << "ç©å®¶ " << playerIter->playerID << "å¾ã€" << sites[playerIter->location].name << "ã€‘";
+			Display::setConsoleCursorCoordinate(144, 28);
+			cout << "ç§»å‹•åˆ°";
+			playerIter->Move(point);//éª°éª°å­ä¸¦ç§»å‹•
+			int currentLocation = playerIter->location;
+			cout << "ã€" << sites[currentLocation].name << "ã€‘";
+			char t;
+			Display::setConsoleCursorCoordinate(144, 29);
+			cout << "è¼¸å…¥ä»»æ„å­—å…ƒç¹¼çºŒ";
+			cin >> t;
+
+			//åˆ¤æ–·æ ¼å­é¡å‹
 			switch (sites[currentLocation].type) {
 			case START:
 				//do nothing for now
 				break;
 			case ESTATE:
-				if (!sites[currentLocation].owner) {//µL¥D¦a
-					if (playerIter->money >= sites[currentLocation].firstPrice) {//­Y¹F¦¨¶R¦a²£±ø¥ó¡A¸ß°İ¬O§_¸m²£(ª±®a²{ª÷¨¬°÷)
-						//¦pªG¦^µªyes(©|¥¼¹ê§@)
+				if (!sites[currentLocation].owner) {//ç„¡ä¸»åœ°
+					if (playerIter->money >= sites[currentLocation].firstPrice) {//è‹¥é”æˆè²·åœ°ç”¢æ¢ä»¶ï¼Œè©¢å•æ˜¯å¦ç½®ç”¢(ç©å®¶ç¾é‡‘è¶³å¤ )
+						//å¦‚æœå›ç­”yes(å°šæœªå¯¦ä½œ)
 						playerIter->ProchaseAnEstate(currentLocation, sites);
 					}
 				}
-				else {//¦³¥D¦a
-					//­Y¹F¦¨¦a²£¤É¯Å±ø¥ó¡A¸ß°İ¬O§_¤É¯Å(¦Û¤v¦a)
+				else {//æœ‰ä¸»åœ°
+					//è‹¥é”æˆåœ°ç”¢å‡ç´šæ¢ä»¶ï¼Œè©¢å•æ˜¯å¦å‡ç´š(è‡ªå·±åœ°)
 					if (sites[currentLocation].owner == playerIter->playerID && sites[currentLocation].estateLevel < 3) {
-						//¦pªG¦^µªyes(©|¥¼¹ê§@)
+						//å¦‚æœå›ç­”yes(å°šæœªå¯¦ä½œ)
 						playerIter->UpgradeAnEstate(currentLocation, sites);
 					}
-					//­Y½ò¨ì¨ä¥Lª±®a¤§¦a²£¡A¶i¦æ¥I¶O(¥L¤H¦a)
+					//è‹¥è¸©åˆ°å…¶ä»–ç©å®¶ä¹‹åœ°ç”¢ï¼Œé€²è¡Œä»˜è²»(ä»–äººåœ°)
 					else if (sites[currentLocation].owner != playerIter->playerID) {
 						playerIter->PayForTheToll(currentLocation, sites,players);
 					}
 				}
 				break;
-				//­Y½ò¨ì¾÷·|¡B©R¹B
+				//è‹¥è¸©åˆ°æ©Ÿæœƒã€å‘½é‹
 			case CHANCE:
 				break;
 			case FORTUNE:
@@ -96,16 +128,16 @@ void Game::process() {
 
 
 		}
-		else {//¤£¥i²¾°Ê
+		else {//ä¸å¯ç§»å‹•
 			playerIter->cannotMove--;
 		}
 
 
-		// ª±®a¦æ¬°µ²§ô
+		// ç©å®¶è¡Œç‚ºçµæŸ
 
-		playerIter->money -= 100000;
+		//playerIter->money -= 100000;
 
-		// ¯}²£§P©w¶}©l
+		// ç ´ç”¢åˆ¤å®šé–‹å§‹
 		vector<Player> fakePlayers;
 		for (auto i = players.begin(); i != players.end(); i++) {
 			if (i->money >= 0) {
@@ -121,9 +153,9 @@ void Game::process() {
 			this->gameLife = false;
 			return;
 		}
-		// ¯}²£§P©wµ²§ô
+		// ç ´ç”¢åˆ¤å®šçµæŸ
 
-		// ³Ó§Q§P©w¶}©l
+		// å‹åˆ©åˆ¤å®šé–‹å§‹
 		playerNum = players.size();
 		if (playerNum == 1) {
 			system("cls");
@@ -136,9 +168,9 @@ void Game::process() {
 			system("pause");
 			return;
 		}
-		// ³Ó§Q§P©wµ²§ô
+		// å‹åˆ©åˆ¤å®šçµæŸ
 
-		// ´M§ä¤U­Óª±®a
+		// å°‹æ‰¾ä¸‹å€‹ç©å®¶
 		this->whosTurn = (this->whosTurn + 1) % (this->players.size());
 		playerIter = players.begin() + this->whosTurn;
 		
@@ -164,12 +196,12 @@ void Game::loadMap() {
 	if (!inputFile) {
 		system("cls");
 		Display::setConsoleCursorCoordinate();
-		cout << "ÀÉ®×¶}±Ò¥¢±Ñ¡Aµ²§ôµ{¦¡\n";
+		cout << "æª”æ¡ˆé–‹å•Ÿå¤±æ•—ï¼ŒçµæŸç¨‹å¼\n";
 		system("pause");
 		exit(1);
 	}
 	else {
-		// ¦aÂIÅª¨ú
+		// åœ°é»è®€å–
 		int location, type;
 		int firstPrice, tolls, firstTolls, secondTolls, thirdTolls;
 		string name;
@@ -190,7 +222,7 @@ void Game::loadMap() {
 				sites.push_back(loadSite);
 			}
 		}
-		// ¦aÂI±Æ§Ç¶}©l
+		// åœ°é»æ’åºé–‹å§‹
 		for (int i = 0; i < sites.size() - 1; i++) {
 			for (int j = 0; j < sites.size() - 1; j++) {
 				if (sites[j].location > sites[j + 1].location) {
@@ -200,9 +232,9 @@ void Game::loadMap() {
 				}
 			}
 		}
-		// ¦aÂI±Æ§Çµ²§ô
+		// åœ°é»æ’åºçµæŸ
 
-		// ...¨¤¦âÅª¨ú
+		// ...è§’è‰²è®€å–
 		string temp;
 		inputFile >> temp;
 		inputFile >> whosTurn;
@@ -227,12 +259,12 @@ void Game::loadMap() {
 				players[i].estate[count].estateLevel = level;
 				sites[ownEstate].estateLevel = level;
 				count++;
-				//if (ss.fail()) break;//½T»{stringstream¦³¥¿±`¬y¥X¡A¨S¦³¥NªíªÅ¤F
+				//if (ss.fail()) break;//ç¢ºèªstringstreamæœ‰æ­£å¸¸æµå‡ºï¼Œæ²’æœ‰ä»£è¡¨ç©ºäº†
 			}
 		}
 		
 
-		// ¨¤¦â±Æ§Ç¶}©l
+		// è§’è‰²æ’åºé–‹å§‹
 		for (int i = 0; i < players.size()-1; i++) {
 			for (int j = 0; j < players.size() - 1; j++) {
 				if (players[j].playerID > players[j + 1].playerID) {
@@ -242,7 +274,7 @@ void Game::loadMap() {
 				}
 			}
 		}
-		// ¨¤¦â±Æ§Çµ²§ô
+		// è§’è‰²æ’åºçµæŸ
 		
 	}
 	inputFile.close();

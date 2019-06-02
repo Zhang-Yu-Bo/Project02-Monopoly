@@ -34,6 +34,7 @@ public:
 	static void dialog(string);
 	static void yesNoDialog(string);
 	static void showGameOptions();
+	static void clearPlayLog();
 private:
 	static void printDice(int num);
 	static string dice[6][3];
