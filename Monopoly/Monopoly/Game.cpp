@@ -77,10 +77,16 @@ void Game::process() {
 				//遙控骰子:剩餘數量N
 			}
 
+			Display::setConsoleCursorCoordinate(144, 26);
 			cout << "請按任意鍵骰動骰子．．．";
 			while (commandPress = _getch()) {
 				if (commandPress == KEYBOARD_ESCAPE) {
-					this->openOptions();
+					int temp = this->openOptions();
+					if (temp == 2) {
+						return;
+					}
+					Display::setConsoleCursorCoordinate(144, 26);
+					cout << "請按任意鍵骰動骰子．．．";
 				}
 				else {
 					break;
@@ -195,7 +201,12 @@ void Game::process() {
 		cout << "請按任意鍵繼續．．．";
 		while (commandPress = _getch()) {
 			if (commandPress == KEYBOARD_ESCAPE) {
-				this->openOptions();
+				int temp = this->openOptions();
+				if (temp == 2) {
+					return;
+				}
+				Display::setConsoleCursorCoordinate(144, 40);
+				cout << "請按任意鍵繼續．．．";
 			}
 			else {
 				break;
@@ -257,17 +268,6 @@ void Game::process() {
 
 
 	}
-	/*
-	while (command = _getch()) {
-		if (command == KEYBOARD_ESCAPE) {
-			this->openOptions();
-			return;
-		}
-		else {
-			return;
-		}
-	}
-	*/
 }
 
 void Game::loadMap() {
@@ -361,8 +361,74 @@ void Game::loadMap() {
 	inputFile.close();
 }
 
-void Game::openOptions() {
+int Game::openOptions() {
 	Display::showGameOptions();
-	//this->gameLife = false;
-	return;
+	Display::setConsoleCursorCoordinate(14, 32);
+	Display::setColor(150);
+	cout << "★";
+	int commandPress = 0, y = 32;
+	while (commandPress = _getch()) {
+		if (commandPress == KEYBOARD_DOWN) {
+			Display::setConsoleCursorCoordinate(14, y);
+			Display::setColor(240);
+			cout << "　";
+			y += 4;
+		}
+		else if (commandPress == KEYBOARD_UP) {
+			Display::setConsoleCursorCoordinate(14, y);
+			Display::setColor(240);
+			cout << "　";
+			y -= 4;
+		}
+		else if (commandPress == KEYBOARD_ENTER) {
+			if (y == 32) {
+				Display::setColor();
+				system("cls");
+				Display::printBoard();
+				Display::printRightSpace(allPlayers);
+				Display::printCurrentPlayer(whosTurn + 1);
+				Display::printRound(remainTurn);
+				Display::printEstate(sites);
+				Display::printPlayersStatus(players);
+				Display::printPlayerStep(players);
+				for (int i = 0; i < 28; i++) {
+					if (sites[i].owner != -1)
+						Display::printOwnEstate(sites[i], players);
+				}
+				return 0;
+			}
+			else if (y == 36) {
+				return 1;
+			}
+			else if (y==40) {
+				this->gameLife = false;
+				Display::setColor(7, 0);
+				return 2;
+			}
+		}
+		else if (commandPress == KEYBOARD_ESCAPE) {
+			Display::setColor();
+			//system("cls");
+			Display::printBoard();
+			Display::printRightSpace(allPlayers);
+			Display::printCurrentPlayer(whosTurn + 1);
+			Display::printRound(remainTurn);
+			Display::printEstate(sites);
+			Display::printPlayersStatus(players);
+			Display::printPlayerStep(players);
+			for (int i = 0; i < 28; i++) {
+				if (sites[i].owner != -1)
+					Display::printOwnEstate(sites[i], players);
+			}
+			return 0;
+		}
+		y = (y < 32) ? 40 : y;
+		y = (y > 40) ? 32 : y;
+		Display::setConsoleCursorCoordinate(14, y);
+		Display::setConsoleCursorCoordinate(14, y);
+		Display::setColor(150);
+		cout << "★";
+
+	}
+	return 0;
 }

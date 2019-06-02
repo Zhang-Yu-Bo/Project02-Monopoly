@@ -188,7 +188,7 @@ string Display::start[9] = {
 		{"¡U¡@°_ÂI¡@¡@¡@¡U"},
 		{"¡U¢á¢â¢Ï¢à¢â¡@¡U"},
 		{"¡U¡@¡@¡@¡@¡@¡@¡U"},
-		{"¡U¡õ¡@¡@¢Õ¢Ý¡I¡U"},
+		{"¡U¡÷¡@¡@¢Õ¢Ý¡I¡U"},
 		{"¡U¡@¡@¡@¡@¡@¡@¡U"},
 		{"¡U¡@¡@¡@¡@¡@¡@¡U"},
 		{"¡D¡Ð¡Ð¡Ð¡Ð¡Ð¡Ð¡D"},
@@ -281,7 +281,7 @@ void Display::rollDiceAnimate(int a)
 	for (int i = 0; i < 20; i++)
 	{
 		printDice(rand() % 6);
-		Sleep(100);
+		Sleep(50);
 	}
 	printDice(a);
 }
