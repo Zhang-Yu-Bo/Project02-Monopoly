@@ -74,7 +74,9 @@ void Game::process() {
 			if (!playerIter->barrier || !playerIter->controlledDice) {//擁有道具的情況
 				//詢問並顯示是否使用道具
 				//路障:剩餘數量N
+				//playerIter->PlaceABarrier(playerIter->location,sites);
 				//遙控骰子:剩餘數量N
+				//請輸入欲擲出點數
 			}
 
 			cout << "請按任意鍵骰動骰子．．．";
@@ -97,7 +99,7 @@ void Game::process() {
 			Display::setConsoleCursorCoordinate(144, 28);
 			cout << "移動到";
 
-			playerIter->Move(point);					// 移動玩家
+			playerIter->Move(point, sites);					// 移動玩家
 			int currentLocation = playerIter->location;
 
 			Display::setConsoleCursorCoordinate(150, 28);
