@@ -408,7 +408,7 @@ int Game::openOptions() {
 		}
 		else if (commandPress == KEYBOARD_ESCAPE) {
 			Display::setColor();
-			//system("cls");
+			system("cls");
 			Display::printBoard();
 			Display::printRightSpace(allPlayers);
 			Display::printCurrentPlayer(whosTurn + 1);
