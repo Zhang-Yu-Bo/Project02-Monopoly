@@ -14,14 +14,41 @@ int Player::RollADice(){
 
 }
 
-void Player::Move(int steps)
-{
-	if (location + steps >= MAX_SITE) {//經過或踩到起點
-		location += (steps - MAX_SITE);
+void Player::Move(int steps, vector<Site>& sites){
+	int destination = this->location + steps;
+	if (destination >= MAX_SITE) {//經過或踩到起點
+		destination -= MAX_SITE;
+		auto siteIter = sites.begin();
+		if (location + 1 < MAX_SITE) {
+			for (siteIter = (sites.begin() + (this->location + 1)); siteIter < sites.end(); siteIter++) {
+				if (siteIter->barrier == true) {//路徑上有路障
+					siteIter->barrier = false;
+					destination = siteIter->location;
+					break;
+				}
+			}
+		}
+		else {
+			siteIter = sites.end();
+		}
+		for (siteIter = (sites.begin()); siteIter <= (sites.begin() + destination); siteIter++) {
+			if (siteIter->barrier == true) {//路徑上有路障
+				siteIter->barrier = false;
+				destination = siteIter->location;
+				break;			
+			}
+		}	
 	}
 	else {
-		location += steps;
+		for (auto siteIter = (sites.begin() + (this->location + 1)); siteIter <= (sites.begin() + destination); siteIter++) {
+			if (siteIter->barrier) {//路徑上有路障
+				siteIter->barrier = false;
+				destination = siteIter->location;
+				break;
+			}
+		}
 	}
+	this->location = destination;
 }
 
 void Player::ProchaseAnEstate(const int position, vector<Site>& sites){
@@ -58,4 +85,8 @@ void Player::PayForTheToll(const int position, const vector<Site>& sites ,vector
 		this->money -= tax;
 		players[sites[position].owner].money += tax;
 	}
+}
+
+void Player::PlaceABarrier(const int position, vector<Site>&sites){
+	sites[position].barrier = true;
 }

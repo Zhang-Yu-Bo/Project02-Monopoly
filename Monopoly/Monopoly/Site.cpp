@@ -1,6 +1,6 @@
 #include "Site.h"
 
-Site::Site(int location, string name, int type, int firstPrice, int tolls, int firstTolls, int secondTolls, int thirdTolls, int estateLevel, int owner) {
+Site::Site(int location, string name, int type, int firstPrice, int tolls, int firstTolls, int secondTolls, int thirdTolls, int estateLevel, int owner, bool barrier) {
 	this->location = location;
 	this->name = name;
 	this->type = type;
@@ -11,6 +11,7 @@ Site::Site(int location, string name, int type, int firstPrice, int tolls, int f
 	this->thirdStageToll = thirdTolls;
 	this->estateLevel = estateLevel;
 	this->owner = owner;
+	this->barrier = barrier;
 }
 
 Site::Site(const Site& copy){
@@ -24,4 +25,5 @@ Site::Site(const Site& copy){
 	thirdStageToll = copy.thirdStageToll;
 	estateLevel = copy.estateLevel;
 	owner = copy.owner;
+	barrier = copy.barrier;
 }
