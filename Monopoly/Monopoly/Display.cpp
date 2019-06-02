@@ -545,7 +545,7 @@ void Display::printOwnEstate(const Site& site, const vector<Player> & players)
 		y = site.location - 9;
 	}
 	else if (site.location < 24) {
-		x = 9 - (24 - site.location);
+		x = 23 - site.location;
 		y = 5;
 	}
 	else if (site.location < 28) {
