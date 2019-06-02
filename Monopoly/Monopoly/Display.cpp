@@ -242,6 +242,13 @@ Display::Display() {
 	srand(time(NULL));
 }
 
+void SetColor(int f = 7, int b = 0)
+{
+	unsigned short ForeColor = f + 16 * b;
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hCon, ForeColor);
+}
+
 void Display::setColor(const int f, const int b)
 {
 	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -581,13 +588,94 @@ void Display::cursorVisiable(bool flag) {
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
 }
 
-void Display::dialog(string text)
+void Display::dialog(string title, string line1 = "", string line2 = "", string line3 = "")
 {
-
+	setConsoleCursorCoordinate(80, 17);
+	SetColor(79);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 18);
+	cout << "¡@" << title;
+	for (int i = title.size() + 1; i < 24; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 19);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	//--------------------------------------
+	setConsoleCursorCoordinate(80, 20);
+	SetColor(143);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 21);
+	cout << "¡@" << line1;
+	for (int i = line1.size() + 1; i < 27; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 22);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 23);
+	cout << "¡@" << line2;
+	for (int i = line2.size() + 1; i < 27; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 24);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 25);
+	cout << "¡@" << line3;
+	for (int i = line3.size() + 1; i < 26; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 26);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setColor();
+	Sleep(10000);
 }
 
-void Display::yesNoDialog(string text)
+void Display::yesNoDialog(string title, string line1 = "", string line2 = "", string line3 = "")
 {
+	setConsoleCursorCoordinate(80, 17);
+	SetColor(79);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 18);
+	cout << "¡@" << title;
+	for (int i = title.size() + 1; i < 24; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 19);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	//--------------------------------------
+	setConsoleCursorCoordinate(80, 20);
+	SetColor(143);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 21);
+	cout << "¡@" << line1;
+	for (int i = line1.size() + 1; i < 27; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 22);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	SetColor(159);
+	cout << "¢ç¢Ó¢á";
+	SetColor(143);
+	cout << "¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 23);
+	cout << "¡@" << line2;
+	for (int i = line2.size() + 1; i < 27; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 24);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@ ";
+	SetColor(203);
+	cout << "¢Ü¢Ý";
+	SetColor(143);
+	cout << " ¡@¡@¡@";
+	setConsoleCursorCoordinate(80, 25);
+	cout << "¡@" << line3;
+	for (int i = line3.size() + 1; i < 26; i++) {
+		cout << "¡@";
+	}
+	setConsoleCursorCoordinate(80, 26);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setColor();
+	Sleep(100000);
 }
 
 void Display::showGameOptions() {

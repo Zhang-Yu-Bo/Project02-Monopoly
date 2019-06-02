@@ -31,8 +31,8 @@ public:
 	static void printOwnEstate(const Site&, const vector<Player>&);
 	static void setConsoleCursorCoordinate(int = 0, int = 0);
 	static void cursorVisiable(bool);
-	static void dialog(string);
-	static void yesNoDialog(string);
+	static void dialog(string, string, string, string);
+	static void yesNoDialog(string, string, string, string);
 	static void showGameOptions();
 	static void clearPlayLog();
 private:

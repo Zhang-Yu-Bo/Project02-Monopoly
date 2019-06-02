@@ -41,6 +41,7 @@ void Game::start() {
 		if (sites[i].owner != -1)
 			Display::printOwnEstate(sites[i], players);
 	}
+	Display::yesNoDialog("警告", "你這臭肥宅", "因油到不行", "罰3000元");
 }
 
 bool Game::isGameAlive() {
