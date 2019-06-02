@@ -112,34 +112,65 @@ void Game::process() {
 			case ESTATE:
 				if (sites[currentLocation].owner == -1) {//無主地
 					if (playerIter->money >= sites[currentLocation].firstPrice) {//若達成買地產條件，詢問是否置產(玩家現金足夠)
+
 						Display::setConsoleCursorCoordinate(144, 30);
 						cout << "【" << sites[currentLocation].name << "】目前沒有地主，想成為它（她）的主人嗎?(y/n)：";
 						char temp;
 						cin >> temp;
 						if (temp == 'y' || temp == 'Y') {
 							playerIter->ProchaseAnEstate(currentLocation, sites);
-							Display::setConsoleCursorCoordinate(144, 31);
-							cout << "你成為了【" << sites[currentLocation].name << "】的master，恭喜你";
+
 							for (int i = 0; i < 28; i++) {
 								if (sites[i].owner != -1)
 									Display::printOwnEstate(sites[i], players);
 							}
+
+							Display::setConsoleCursorCoordinate(144, 31);
+							cout << "你成為了【" << sites[currentLocation].name << "】的Master，恭喜你";
 						}
 						else {
 							Display::setConsoleCursorCoordinate(144, 31);
 							cout << "你拒絕購買【" << sites[currentLocation].name << "】";
 						}
+
 					}
 				}
 				else {//有主地
 					//若達成地產升級條件，詢問是否升級(自己地)
 					if (sites[currentLocation].owner == playerIter->playerID && sites[currentLocation].estateLevel < 3) {
-						//如果回答yes(尚未實作)
-						playerIter->UpgradeAnEstate(currentLocation, sites);
+						
+						Display::setConsoleCursorCoordinate(144, 30);
+						cout << "你是【" << sites[currentLocation].name << "】的Master，想讓它（她）升級嗎?(y/n)：";
+						char temp;
+						cin >> temp;
+						if (temp == 'y' || temp == 'Y') {
+							playerIter->UpgradeAnEstate(currentLocation, sites);
+
+							for (int i = 0; i < 28; i++) {
+								if (sites[i].owner != -1)
+									Display::printOwnEstate(sites[i], players);
+							}
+
+							Display::setConsoleCursorCoordinate(144, 31);
+							cout << "恭喜你讓【" << sites[currentLocation].name << "】更加臣服於你";
+						}
+						else {
+							Display::setConsoleCursorCoordinate(144, 31);
+							cout << "你拒絕讓【" << sites[currentLocation].name << "】升級";
+						}
+						
 					}
 					//若踩到其他玩家之地產，進行付費(他人地)
 					else if (sites[currentLocation].owner != playerIter->playerID) {
+
+						Display::setConsoleCursorCoordinate(144, 30);
+						cout << "【" << sites[currentLocation].name << "】是別人的土地，必須繳交過路費";
+						Display::setConsoleCursorCoordinate(144, 31);
+						cout << "你的金額從＄" << setw(10) << playerIter->money << "→＄";
 						playerIter->PayForTheToll(currentLocation, sites, players);
+						Display::setConsoleCursorCoordinate(170, 31);
+						cout << setw(10) << playerIter->money;
+
 					}
 				}
 				break;
@@ -171,35 +202,41 @@ void Game::process() {
 			}
 		}
 
-		//playerIter->money -= 100000;
+		if (playerIter->playerID==0&&playerIter->money>0)
+			playerIter->money -= 100000;
 
 		// 破產判定開始
-		vector<Player> fakePlayers;
-		for (auto i = players.begin(); i != players.end(); i++) {
-			if (i->money >= 0) {
-				fakePlayers.push_back(*i);
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].money < 0) {
+				for (int j = 0; j < players[i].estate.size(); j++) {
+					sites[players[i].estate[j].location].estateLevel = 0;
+					sites[players[i].estate[j].location].owner = -1;
+				}
+				players[i].estate.erase(players[i].estate.begin(), players[i].estate.end());
 			}
-			else {
-
-			}
-		}
-		players = fakePlayers;
-		playerNum = players.size();
-		if (playerNum == 0) {
-			this->gameLife = false;
-			return;
 		}
 		// 破產判定結束
 
 		// 勝利判定開始
-		playerNum = players.size();
+		playerNum = 0;
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].money >= 0) {
+				playerNum++;
+			}
+		}
 		if (playerNum == 1 || this->remainTurn == 1) {
+			Display::setColor(7, 0);
 			system("cls");
-			auto i = players.begin();
-			for (; i != players.end(); i++)
-				if (i->money >= 0)
-					break;
-			cout << "Player" << i->playerID << " is winner.\n";
+			Player winner(0, 0, 0, 0, 0, 0);
+			int max = 0;
+			for (int i = 0; i < players.size(); i++) {
+				if (players[i].money > max) {
+					winner = players[i];
+					max = players[i].money;
+				}
+			}
+				
+			cout << "Player" << winner.playerID << " is winner.\n";
 			this->gameLife = false;
 			system("pause");
 			return;
@@ -207,12 +244,14 @@ void Game::process() {
 		// 勝利判定結束
 
 		// 尋找下個玩家
-		this->whosTurn++;
-		if (this->whosTurn % this->players.size() == 0) {
-			this->remainTurn--;
-			this->whosTurn %= this->players.size();
-		}
-		playerIter = players.begin() + this->whosTurn;
+		do {
+			this->whosTurn++;
+			if (this->whosTurn % this->players.size() == 0) {
+				this->remainTurn--;
+				this->whosTurn %= this->players.size();
+			}
+			playerIter = players.begin() + this->whosTurn;
+		} while (playerIter->money < 0);
 		
 
 
