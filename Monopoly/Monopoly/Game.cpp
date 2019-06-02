@@ -164,7 +164,7 @@ void Game::process() {
 					else if (sites[currentLocation].owner != playerIter->playerID) {
 
 						Display::setConsoleCursorCoordinate(144, 30);
-						cout << "【" << sites[currentLocation].name << "】是別人的土地，必須繳交過路費";
+						cout << "【" << sites[currentLocation].name << "】是玩家 "<< sites[currentLocation].owner+1 <<"的土(老)地(婆)，必須繳交過路費";
 						Display::setConsoleCursorCoordinate(144, 31);
 						cout << "你的金額從＄" << setw(10) << playerIter->money << "→＄";
 						playerIter->PayForTheToll(currentLocation, sites, players);
@@ -202,6 +202,7 @@ void Game::process() {
 			}
 		}
 
+		// 破產測試
 		if (playerIter->playerID==0&&playerIter->money>0)
 			playerIter->money -= 100000;
 
