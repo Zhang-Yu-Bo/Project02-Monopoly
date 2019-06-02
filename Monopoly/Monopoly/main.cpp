@@ -8,6 +8,8 @@ using namespace std;
 int main(void) {
 	MainMenu menu;
 	int nextStep = 0;
+	srand((unsigned)time(NULL));//set "random" seed	
+	(int)((rand() / (RAND_MAX + 1.0)) * (6 - 1 + 1.0) + 1);//濾掉第一個固定數字
 	while (nextStep = menu.showMenu()) {
 		string fileName = "basemap";
 		if (nextStep == 2) {

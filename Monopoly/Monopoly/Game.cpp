@@ -98,7 +98,7 @@ void Game::process() {
 				//do nothing for now
 				break;
 			case ESTATE:
-				if (!sites[currentLocation].owner) {//無主地
+				if (sites[currentLocation].owner == -1) {//無主地
 					if (playerIter->money >= sites[currentLocation].firstPrice) {//若達成買地產條件，詢問是否置產(玩家現金足夠)
 						//如果回答yes(尚未實作)
 						playerIter->ProchaseAnEstate(currentLocation, sites);
