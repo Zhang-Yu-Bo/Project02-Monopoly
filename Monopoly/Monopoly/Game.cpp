@@ -20,14 +20,14 @@ void Game::start() {
 	system("mode con cols=220 lines=50");
 	Display::printBoard();
 	Display::printRightSpace(allPlayers);
-	Display::printCurrentPlayer(whosTurn+1);
+	Display::printCurrentPlayer(whosTurn + 1);
 	Display::printRound(remainTurn);
 	Display::printEstate(sites);
 	Display::printPlayersStatus(players);
 	Display::printPlayerStep(players);
 	for (int i = 0; i < 28; i++) {
-		if(sites[i].owner!=-1)
-		Display::printOwnEstate(sites[i], players);
+		if (sites[i].owner != -1)
+			Display::printOwnEstate(sites[i], players);
 	}
 	//this->openOptions();
 	//system("pause");
@@ -54,11 +54,23 @@ void Game::process() {
 		//cout << "這是測試";
 		//Display::setConsoleCursorCoordinate(210, 40);
 		//cout << "０";
+
+		// 全畫面更新
+		Display::printRightSpace(allPlayers);
+		Display::printCurrentPlayer(whosTurn + 1);
+		Display::printRound(remainTurn);
+		Display::printEstate(sites);
+		Display::printPlayersStatus(players);
+		Display::printPlayerStep(players);
+		for (int i = 0; i < 28; i++) {
+			if (sites[i].owner != -1)
+				Display::printOwnEstate(sites[i], players);
+		}
 		Display::clearPlayLog();
 
 		// 玩家行為開始
 		if (!playerIter->cannotMove) {//可移動(回合沒被跳過)
-			
+
 			if (!playerIter->barrier || !playerIter->controlledDice) {//擁有道具的情況
 				//詢問並顯示是否使用道具
 				//路障:剩餘數量N
@@ -81,16 +93,16 @@ void Game::process() {
 			Display::clearPlayLog();
 			cout << "現在骰到了 " << point;
 			Display::setConsoleCursorCoordinate(144, 27);
-			cout << "玩家 " << playerIter->playerID << "從【" << sites[playerIter->location].name << "】";
+			cout << "玩家 " << playerIter->playerID + 1 << "從【" << sites[playerIter->location].name << "】";
 			Display::setConsoleCursorCoordinate(144, 28);
 			cout << "移動到";
-			playerIter->Move(point);//骰骰子並移動
+
+			playerIter->Move(point);					// 移動玩家
 			int currentLocation = playerIter->location;
+
+			Display::setConsoleCursorCoordinate(150, 28);
 			cout << "【" << sites[currentLocation].name << "】";
-			char t;
-			Display::setConsoleCursorCoordinate(144, 29);
-			cout << "輸入任意字元繼續";
-			cin >> t;
+			Display::printPlayerStep(players);
 
 			//判斷格子類型
 			switch (sites[currentLocation].type) {
@@ -100,8 +112,23 @@ void Game::process() {
 			case ESTATE:
 				if (sites[currentLocation].owner == -1) {//無主地
 					if (playerIter->money >= sites[currentLocation].firstPrice) {//若達成買地產條件，詢問是否置產(玩家現金足夠)
-						//如果回答yes(尚未實作)
-						playerIter->ProchaseAnEstate(currentLocation, sites);
+						Display::setConsoleCursorCoordinate(144, 30);
+						cout << "【" << sites[currentLocation].name << "】目前沒有地主，想成為它（她）的主人嗎?(y/n)：";
+						char temp;
+						cin >> temp;
+						if (temp == 'y' || temp == 'Y') {
+							playerIter->ProchaseAnEstate(currentLocation, sites);
+							Display::setConsoleCursorCoordinate(144, 31);
+							cout << "你成為了【" << sites[currentLocation].name << "】的master，恭喜你";
+							for (int i = 0; i < 28; i++) {
+								if (sites[i].owner != -1)
+									Display::printOwnEstate(sites[i], players);
+							}
+						}
+						else {
+							Display::setConsoleCursorCoordinate(144, 31);
+							cout << "你拒絕購買【" << sites[currentLocation].name << "】";
+						}
 					}
 				}
 				else {//有主地
@@ -112,7 +139,7 @@ void Game::process() {
 					}
 					//若踩到其他玩家之地產，進行付費(他人地)
 					else if (sites[currentLocation].owner != playerIter->playerID) {
-						playerIter->PayForTheToll(currentLocation, sites,players);
+						playerIter->PayForTheToll(currentLocation, sites, players);
 					}
 				}
 				break;
@@ -131,9 +158,18 @@ void Game::process() {
 		else {//不可移動
 			playerIter->cannotMove--;
 		}
-
-
 		// 玩家行為結束
+
+		Display::setConsoleCursorCoordinate(144, 40);
+		cout << "請按任意鍵繼續．．．";
+		while (commandPress = _getch()) {
+			if (commandPress == KEYBOARD_ESCAPE) {
+				this->openOptions();
+			}
+			else {
+				break;
+			}
+		}
 
 		//playerIter->money -= 100000;
 
@@ -157,7 +193,7 @@ void Game::process() {
 
 		// 勝利判定開始
 		playerNum = players.size();
-		if (playerNum == 1) {
+		if (playerNum == 1 || this->remainTurn == 1) {
 			system("cls");
 			auto i = players.begin();
 			for (; i != players.end(); i++)
@@ -171,9 +207,14 @@ void Game::process() {
 		// 勝利判定結束
 
 		// 尋找下個玩家
-		this->whosTurn = (this->whosTurn + 1) % (this->players.size());
+		this->whosTurn++;
+		if (this->whosTurn % this->players.size() == 0) {
+			this->remainTurn--;
+			this->whosTurn %= this->players.size();
+		}
 		playerIter = players.begin() + this->whosTurn;
 		
+
 
 	}
 	/*
@@ -210,7 +251,7 @@ void Game::loadMap() {
 		inputFile >> allPlayers;
 		for (int i = 0; i < 28; i++) {
 			inputFile >> location >> name >> type;
-			if (type == 1) 
+			if (type == 1)
 			{
 				inputFile >> firstPrice >> tolls >> firstTolls >> secondTolls >> thirdTolls;
 				Site loadSite(location, name, type, firstPrice, tolls, firstTolls, secondTolls, thirdTolls);
@@ -240,7 +281,7 @@ void Game::loadMap() {
 		inputFile >> whosTurn;
 		for (int i = 0; i < allPlayers; i++) {
 			stringstream ss;
-			int index,location, money;
+			int index, location, money;
 			int ownEstate;
 			int level;
 			inputFile >> index;
@@ -262,10 +303,10 @@ void Game::loadMap() {
 				//if (ss.fail()) break;//確認stringstream有正常流出，沒有代表空了
 			}
 		}
-		
+
 
 		// 角色排序開始
-		for (int i = 0; i < players.size()-1; i++) {
+		for (int i = 0; i < players.size() - 1; i++) {
 			for (int j = 0; j < players.size() - 1; j++) {
 				if (players[j].playerID > players[j + 1].playerID) {
 					Player temp = players[j];
@@ -275,7 +316,7 @@ void Game::loadMap() {
 			}
 		}
 		// 角色排序結束
-		
+
 	}
 	inputFile.close();
 }
