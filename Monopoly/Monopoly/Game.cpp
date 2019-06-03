@@ -182,15 +182,20 @@ void Game::process() {
 			cout << "現在骰到了 " << point;
 			Display::setConsoleCursorCoordinate(144, 27);
 			cout << "玩家 " << playerIter->playerID + 1 << "從【" << sites[playerIter->location].name << "】";
-			Display::setConsoleCursorCoordinate(144, 28);
-			cout << "移動到";
 
-
-			playerIter->Move(point, sites);					// 移動玩家
-
+			bool isCrossingWall = playerIter->Move(point, sites);					// 移動玩家
 			int currentLocation = playerIter->location;
 
-			Display::setConsoleCursorCoordinate(150, 28);
+			if (isCrossingWall == false) {
+				// 撞牆了(障礙物)
+				Display::setConsoleCursorCoordinate(144, 28);
+				cout << "撞到了該死的障礙物，因此";
+			}
+
+			Display::setConsoleCursorCoordinate(144, 29);
+			cout << "移動到";
+
+			Display::setConsoleCursorCoordinate(150, 29);
 			cout << "【" << sites[currentLocation].name << "】";
 			Display::printPlayerStep(players);
 
