@@ -116,7 +116,7 @@ void Game::process() {
 				//路障:剩餘數量N
 				Display::setConsoleCursorCoordinate(144, 26);
 				if (playerIter->barrier > 0) {
-					cout << "道具[路障]尚餘";
+					cout << "道具【路障】尚餘";
 					cout << std::right << setw(2) << setfill('0') << playerIter->barrier;
 					cout << "個，請問要使用嗎?(y/n)：";
 					string temp = "";
@@ -125,13 +125,13 @@ void Game::process() {
 					if (temp == "y" || temp == "Y") {
 						playerIter->PlaceABarrier(playerIter->location,sites);
 						playerIter->barrier--;
-						cout << "你在[" << sites[playerIter->location].name << "]放置了路障，你這臭GG";
+						cout << "你在【" << sites[playerIter->location].name << "】放置了路障，你這臭GG";
 					}
 					else {
 						cout << "你選擇不設置路障，你是個好人";
 					}
 					Display::setConsoleCursorCoordinate(144, 28);
-					cout << "道具[路障]尚餘";
+					cout << "道具【路障】尚餘";
 					cout << std::right << setw(2) << setfill('0') << playerIter->barrier;
 					cout << "個";
 					/// 等待輸入開始
@@ -256,10 +256,10 @@ void Game::process() {
 						Display::setConsoleCursorCoordinate(144, 30);
 						cout << "【" << sites[currentLocation].name << "】是玩家 "<< sites[currentLocation].owner+1 <<"的土(老)地(婆)，必須繳交過路費";
 						Display::setConsoleCursorCoordinate(144, 31);
-						cout << "你的金額從＄" << setw(6) << setfill('0') << playerIter->money << "→＄";
+						cout << "你的金額從＄" << setw(6) << setfill(' ') << playerIter->money << "→＄";
 						playerIter->PayForTheToll(currentLocation, sites, players);
-						Display::setConsoleCursorCoordinate(170, 31);
-						cout << setw(6) << setfill('0') << playerIter->money;
+						Display::setConsoleCursorCoordinate(166, 31);
+						cout << setw(6) << setfill(' ') << playerIter->money;
 
 					}
 				}
