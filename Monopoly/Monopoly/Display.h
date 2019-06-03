@@ -29,6 +29,7 @@ public:
 	static void printMainMenu();
 	static void printPlayerStep(const vector<Player>&);
 	static void printOwnEstate(const Site&, const vector<Player>&);
+	static void printObstacle(const Site&);
 	static void setConsoleCursorCoordinate(int = 0, int = 0);
 	static void cursorVisiable(bool);
 	static void dialog(string, string, string, string);

@@ -582,6 +582,35 @@ void Display::printOwnEstate(const Site& site, const vector<Player> & players)
 	setColorForPlayer();
 }
 
+void Display::printObstacle(const Site& site)
+{
+	int x = 0, y = 0;
+	if (site.location >= 0 && site.location < 10) {
+		x = site.location;
+		y = 0;
+	}
+	else if (site.location < 15) {
+		x = 9;
+		y = site.location - 9;
+	}
+	else if (site.location < 24) {
+		x = 23 - site.location;
+		y = 5;
+	}
+	else if (site.location < 28) {
+		x = 0;
+		y = (28 - site.location);
+	}
+	x *= 14;
+	y *= 8;
+	x += 10;
+	y += 4;
+	setConsoleCursorCoordinate(x, y);
+	SetColor(118);
+	cout << "¡¶";
+	setColor();
+}
+
 void Display::cursorVisiable(bool flag) {
 	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
 	cci.bVisible = flag;
