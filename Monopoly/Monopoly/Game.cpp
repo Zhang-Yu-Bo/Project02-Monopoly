@@ -114,7 +114,46 @@ void Game::process() {
 			if (!playerIter->barrier || !playerIter->controlledDice) {//擁有道具的情況
 				//詢問並顯示是否使用道具
 				//路障:剩餘數量N
-				//playerIter->PlaceABarrier(playerIter->location,sites);
+				Display::setConsoleCursorCoordinate(144, 26);
+				if (playerIter->barrier > 0) {
+					cout << "道具[路障]尚餘";
+					cout << std::right << setw(2) << setfill('0') << playerIter->barrier;
+					cout << "個，請問要使用嗎?(y/n)：";
+					string temp = "";
+					cin >> temp;
+					Display::setConsoleCursorCoordinate(144, 27);
+					if (temp == "y" || temp == "Y") {
+						playerIter->PlaceABarrier(playerIter->location,sites);
+						playerIter->barrier--;
+						cout << "你在[" << sites[playerIter->location].name << "]放置了路障，你這臭GG";
+					}
+					else {
+						cout << "你選擇不設置路障，你是個好人";
+					}
+					Display::setConsoleCursorCoordinate(144, 28);
+					cout << "道具[路障]尚餘";
+					cout << std::right << setw(2) << setfill('0') << playerIter->barrier;
+					cout << "個";
+					/// 等待輸入開始
+					Display::setConsoleCursorCoordinate(144, 29);
+					cout << "請按任意鍵繼續遊戲．．．";
+					while (commandPress = _getch()) {
+						if (commandPress == KEYBOARD_ESCAPE) {
+							int temp = this->openOptions();
+							if (temp == 2) {
+								return;
+							}
+							Display::setConsoleCursorCoordinate(144, 29);
+							cout << "請按任意鍵繼續遊戲．．．";
+						}
+						else {
+							break;
+						}
+					}
+					/// 等待輸入結束
+
+				}
+				Display::clearPlayLog();
 				//遙控骰子:剩餘數量N
 				//請輸入欲擲出點數
 			}
@@ -217,10 +256,10 @@ void Game::process() {
 						Display::setConsoleCursorCoordinate(144, 30);
 						cout << "【" << sites[currentLocation].name << "】是玩家 "<< sites[currentLocation].owner+1 <<"的土(老)地(婆)，必須繳交過路費";
 						Display::setConsoleCursorCoordinate(144, 31);
-						cout << "你的金額從＄" << setw(10) << playerIter->money << "→＄";
+						cout << "你的金額從＄" << setw(6) << setfill('0') << playerIter->money << "→＄";
 						playerIter->PayForTheToll(currentLocation, sites, players);
 						Display::setConsoleCursorCoordinate(170, 31);
-						cout << setw(10) << playerIter->money;
+						cout << setw(6) << setfill('0') << playerIter->money;
 
 					}
 				}
@@ -258,8 +297,8 @@ void Game::process() {
 		/// 等待輸入結束
 
 		// 破產測試
-		if (playerIter->playerID==0&&playerIter->money>0)
-			playerIter->money -= 100000;
+		//if (playerIter->playerID==0&&playerIter->money>0)
+		//	playerIter->money -= 100000;
 
 		/// 破產判定開始
 		for (int i = 0; i < players.size(); i++) {

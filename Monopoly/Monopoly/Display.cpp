@@ -675,7 +675,7 @@ void Display::yesNoDialog(string title, string line1 = "", string line2 = "", st
 	setConsoleCursorCoordinate(80, 26);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setColor();
-	Sleep(100000);
+	//Sleep(100000);
 }
 
 void Display::showGameOptions() {
