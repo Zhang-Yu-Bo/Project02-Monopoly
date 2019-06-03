@@ -21,7 +21,7 @@ public:
 	//行為
 	
 	int RollADice();//骰骰子(回傳骰了多少) 
-	void Move(int, vector<Site>&);//玩家移動(傳入移動步數,site)
+	bool Move(int, vector<Site>&);//玩家移動(傳入移動步數,site)
 	void ProchaseAnEstate(const int, vector<Site>&);//玩家購買房產(傳入房產地點,game裡的vector<Sites>&並一併修改)
 	void UpgradeAnEstate(const int, vector<Site>&);//玩家升級房產(傳入房產地點,game裡的vector<Sites>&並一併修改)
 	void PayForTheToll(const int, const vector<Site>&, vector<Player>&);
