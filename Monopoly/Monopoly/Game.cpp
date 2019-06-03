@@ -115,7 +115,7 @@ void Game::process() {
 				//詢問並顯示是否使用道具
 				//路障:剩餘數量N
 				Display::setConsoleCursorCoordinate(144, 26);
-				if (playerIter->barrier > 0) {
+				if (playerIter->barrier > 0 && sites[playerIter->location].barrier == false) {
 					cout << "道具【路障】尚餘";
 					cout << std::right << setw(2) << setfill('0') << playerIter->barrier;
 					cout << "個，請問要使用嗎?(y/n)：";
