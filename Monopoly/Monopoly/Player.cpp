@@ -4,7 +4,7 @@ Player::Player(int playerID, int location, int money, int barrier = 0, int contr
 	this->playerID = playerID;
 	this->location = location;
 	this->money = money;
-	this->barrier = 10;
+	this->barrier = barrier;
 	this->controlledDice = controlledDice;
 	this->cannotMove = cannotMove;
 }
@@ -14,41 +14,42 @@ int Player::RollADice(){
 
 }
 
-void Player::Move(int steps, vector<Site>& sites){
+bool Player::Move(int steps, vector<Site>& sites){
 	int destination = this->location + steps;
 	if (destination >= MAX_SITE) {//經過或踩到起點
 		destination -= MAX_SITE;
 		auto siteIter = sites.begin();
 		if (location + 1 < MAX_SITE) {
 			for (siteIter = (sites.begin() + (this->location + 1)); siteIter < sites.end(); siteIter++) {
-				if (siteIter->barrier == true) {//路徑上有路障
+				if (siteIter->barrier == true) {//路徑上有路障，回傳false
 					siteIter->barrier = false;
 					destination = siteIter->location;
-					break;
+					this->location = destination;
+					return false;
 				}
 			}
-		}
-		else {
-			siteIter = sites.end();
 		}
 		for (siteIter = (sites.begin()); siteIter <= (sites.begin() + destination); siteIter++) {
 			if (siteIter->barrier == true) {//路徑上有路障
 				siteIter->barrier = false;
 				destination = siteIter->location;
-				break;			
+				this->location = destination;
+				return false;
 			}
 		}	
 	}
 	else {
 		for (auto siteIter = (sites.begin() + (this->location + 1)); siteIter <= (sites.begin() + destination); siteIter++) {
-			if (siteIter->barrier) {//路徑上有路障
+			if (siteIter->barrier == true) {//路徑上有路障
 				siteIter->barrier = false;
 				destination = siteIter->location;
-				break;
+				this->location = destination;
+				return false;
 			}
 		}
 	}
 	this->location = destination;
+	return true;
 }
 
 void Player::ProchaseAnEstate(const int position, vector<Site>& sites){
@@ -89,4 +90,5 @@ void Player::PayForTheToll(const int position, const vector<Site>& sites ,vector
 
 void Player::PlaceABarrier(const int position, vector<Site>&sites){
 	sites[position].barrier = true;
+	barrier--;
 }
