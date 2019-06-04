@@ -498,12 +498,13 @@ void Display::printMainMenu() {
 	system("color 70");
 	SetColor(112);
 	setConsoleCursorCoordinate(0, 0);
-	cout << "→　　　　　　　　開始新局　　";
+	cout << "→　　　　　開始新局　　";
 
 	setConsoleCursorCoordinate(0, 1);
-	cout << "　　　　　　　　　讀取地圖　　";
+	cout << "　　　　　　讀取地圖　　";
+	
 	setConsoleCursorCoordinate(0, 2);
-	cout << "　　　　　　　　　結束遊戲　　";
+	cout << "　　　　　　結束遊戲　　";
 	
 
 	setConsoleCursorCoordinate(0, 5);
@@ -559,33 +560,156 @@ void Display::printMainMenu() {
 	blank("gray", 2);
 	blank("red", 1);
 	blank("gray", 2);
+	blank("red", 2);
 	blank("gray", 2);
+	blank("purple", 1);
 	blank("gray", 2);
+	blank("red", 2);
 	blank("gray", 4);
+	blank("red", 2);
+	blank("purple", 1);
 	blank("gray", 4);
+	blank("red", 1);
 	blank("gray", 4);
+	blank("green", 1);
+	blank("red", 2);
 	blank("gray", 4);
+	blank("red", 2);
+	blank("green", 1);
+	blank("gray", 4);
+	blank("red", 13);
 
 	setConsoleCursorCoordinate(0, 8);
-	for (int i = 0; i < 78; i++) {
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 12);
+	blank("gray", 3);
+	blank("red", 1);
+	blank("green", 1);
+	blank("gray", 4);
+	blank("red", 4);
+	blank("gray", 5);
+	blank("purple", 1);
+	blank("gray", 3);
+	blank("purple", 1);
+	blank("red", 3);
+	blank("gray", 4);
+	blank("red", 1);
+	blank("gray", 4);
+	blank("red", 3);
+	blank("green", 1);
+	blank("gray", 3);
+	blank("red", 3);
+	blank("green", 1);
+	blank("gray", 2);
+	blank("purple", 1);
+	blank("red", 13);
 
-	}
+
 	setConsoleCursorCoordinate(0, 9);
-	for (int i = 0; i < 78; i++) {
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 12);
+	blank("gray", 3);
+	blank("purple", 1);
+	blank("gray", 5);
+	blank("red", 4);
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("gray", 5);
+	blank("purple", 1);
+	blank("red", 3);
+	blank("gray", 6);
+	blank("purple", 1);
+	blank("gray", 2);
+	blank("red", 3);
+	blank("green", 1);
+	blank("gray", 3);
+	blank("red", 4);
+	blank("gray", 2);
+	blank("red", 14);
 
-	}
+
 	setConsoleCursorCoordinate(0, 10);
-	for (int i = 0; i < 78; i++) {
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 12);
+	blank("gray", 1);
+	blank("green", 1);
+	blank("gray", 3);
+	blank("red", 1);
+	blank("gray", 1);
+	blank("green", 1);
+	blank("gray", 2);
+	blank("red", 2);
+	blank("gray", 2);
+	blank("red", 1);
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 1);
+	blank("gray", 6);
+	blank("red", 1);
+	blank("gray", 2);
+	blank("purple", 1);
+	blank("gray", 2);
+	blank("red", 3);
+	blank("purple", 1);
+	blank("gray", 2);
+	blank("red", 1);
+	blank("purple", 1);
+	blank("gray", 2);
+	blank("purple", 1);
+	blank("gray", 1);
+	blank("purple", 4);
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 14);
 
-	}
 	setConsoleCursorCoordinate(0, 11);
-	for (int i = 0; i < 78; i++) {
-
-	}
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 11);
+	blank("purple", 1);
+	blank("gray", 1);
+	blank("red", 2);
+	blank("gray", 1);
+	blank("red", 2);
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 1);
+	blank("gray", 4);
+	blank("purple", 1);
+	blank("red", 1);
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 2);
+	blank("green", 1);
+	blank("gray", 1);
+	blank("red", 1);
+	blank("gray", 4);
+	blank("purple", 1);
+	blank("red", 1);
+	blank("gray", 2);
+	blank("red", 4);
+	blank("purple", 1);
+	blank("gray", 4);
+	blank("red", 1);
+	blank("green", 1);
+	blank("gray", 6);
+	blank("red", 15);
 	setConsoleCursorCoordinate(0, 12);
-	for (int i = 0; i < 78; i++) {
+	blank("gray", 1);
+	blank("purple", 1);
+	blank("red", 74);
+	setColor();
+	setConsoleCursorCoordinate(0, 16);
+	blank("black", 76);
 
-	}
+	setConsoleCursorCoordinate(30, 1);
+	blank("black", 60);
+	setColor();
 }
 
 void Display::printPlayerStep(const vector<Player>& players)
@@ -814,6 +938,7 @@ void Display::blank(string type , int num)
 	if (type == "gray") SetColor(112);
 	if (type == "green") SetColor(96);
 	if (type == "purple") SetColor(80);
+	if (type == "black") SetColor(0);
 	for (int i = 0; i < num; i++) {
 		cout << "　";
 	}
