@@ -6,7 +6,7 @@ MainMenu::MainMenu() {
 
 int MainMenu::showMenu() {
 	// 調整視窗大小
-	system("mode con cols=50 lines=10");
+	system("mode con cols=154 lines=20");
 	// 繪製Menu
 	Display::printMainMenu();
 
