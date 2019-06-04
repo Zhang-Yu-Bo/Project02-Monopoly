@@ -101,6 +101,10 @@ void Game::process() {
 			if (sites[i].owner != -1)
 				Display::printOwnEstate(sites[i], players);
 		}
+		for (int i = 0; i < 28; i++) {
+			if (sites[i].barrier == true)
+				Display::printObstacle(sites[i]);
+		}
 		Display::clearPlayLog();
 
 		// 玩家行為開始
@@ -118,9 +122,10 @@ void Game::process() {
 					cout << "個，請問要使用嗎?(y/n)：";
 					string temp = "";
 					cin >> temp;
-					Display::setConsoleCursorCoordinate(144, 27);
 					if (temp == "y" || temp == "Y") {
 						playerIter->PlaceABarrier(playerIter->location, sites);
+						Display::printObstacle(sites[playerIter->location]);
+						Display::setConsoleCursorCoordinate(144, 27);
 						cout << "你在【" << sites[playerIter->location].name << "】放置了路障，你這臭GG";
 					}
 					else {
