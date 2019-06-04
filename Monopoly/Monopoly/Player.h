@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <vector>
 #include <sstream>
+#include <iomanip>
 
 #ifndef _PLAYER_H_
 #define _PLAYER_H_

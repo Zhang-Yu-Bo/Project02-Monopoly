@@ -5,9 +5,9 @@ Player::Player(int playerID, int location, int money, int barrier = 0, int contr
 	this->location = location;
 	this->money = money;
 	//this->barrier = barrier;
-	this->barrier = 10;
+	this->barrier = 2;
 	//this->controlledDice = controlledDice;
-	this->controlledDice = 10;
+	this->controlledDice = 2;
 	this->cannotMove = cannotMove;
 }
 

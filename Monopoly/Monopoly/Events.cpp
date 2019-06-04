@@ -30,24 +30,24 @@ string Player::FCEvents(const int c ,vector<Player>& players) {
 	if (c == CHANCE) {//機會
 		switch (r){
 		case 1: case 2: case 3:
-			str = "和喵!獲得1500元";
+			str = "和喵！獲得1500元";
 			money += 1500;
 			return str;
 			break;
 		case 4:	case 5:
 			
 			if (n < 4) {
-				ss << "還敢氪金啊，" << n << "單才出貨，獲得控骰一顆，損失 " << 300 * n << "元";
+				ss << "還敢氪金啊，" << setw(2) << right << setfill('0') << n << "單才出貨，獲得控骰一顆，損失 " << 300 * n << "元";
 			}
 			else {
-				ss << "還敢氪金啊，" << n << "單才出貨，獲得控骰一顆，損失" << 300 * n << "元";
+				ss << "還敢氪金啊，" << setw(2) << right << setfill('0') << n << "單才出貨，獲得控骰一顆，損失" << 300 * n << "元";
 			}
 			controlledDice++;
 			money -= (300 * n);
 			return ss.str();
 			break;
 		case 6:
-			ss << "在你的土地上挖出了黃金與石油，" << estateSize << "棟房產令你獲得" << 1000 * estateSize << "元";
+			ss << "在你的土地上挖出了黃金與石油，" << setw(2) << right << setfill('0') << estateSize << "棟房產令你獲得" << 1000 * estateSize << "元";
 			money += (1000 * estateSize);
 			return ss.str();
 			break;
@@ -64,10 +64,10 @@ string Player::FCEvents(const int c ,vector<Player>& players) {
 		vector<pair<int,int>> v;//ID,money
 		switch (r) {
 		case 1:	case 2:
-			str = "自摸喵!向其他玩家收取1000元";
+			str = "自摸喵！向其他玩家收取1000元";
 			for (int i = 0; i < players.size(); i++) {
 				if (i != pID && players[i].money > 0) {
-					players[pID].money -= 1000;
+					players[i].money -= 1000;
 					m += 1000;
 				}
 			}
@@ -93,9 +93,10 @@ string Player::FCEvents(const int c ,vector<Player>& players) {
 			return str;
 			break;
 		case 4:	case 5:
-			str = "伺服器維修10小時，補償 300元，無法移動1回合";
+			str = "伺服器維修10小時，補償 300元，無法移動 1回合";
 			cannotMove++;
 			money += 300;
+			return str;
 			break;
 		case 6:	case 7:	case 8:
 			str = "你４８４想當G8人，獲得路障一個";
@@ -103,6 +104,7 @@ string Player::FCEvents(const int c ,vector<Player>& players) {
 			return str;
 			break;
 		default:
+			return "什麼事也沒發生，你就是個邊緣人";
 			break;
 		}
 	}

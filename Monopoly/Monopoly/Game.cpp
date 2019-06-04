@@ -247,7 +247,9 @@ void Game::process() {
 			cout << "【" << sites[currentLocation].name << "】";
 			Display::printPlayerStep(players);
 
+
 			//判斷格子類型
+			string eventMessage = "";
 			switch (sites[currentLocation].type) {
 			case START:
 				//do nothing for now
@@ -319,16 +321,20 @@ void Game::process() {
 				break;
 				//若踩到機會、命運
 			case CHANCE:
-				playerIter->FCEvents(CHANCE,players);
+				eventMessage = playerIter->FCEvents(CHANCE, players);
+				Display::dialog("機會", "", eventMessage, "");
 				break;
 			case FORTUNE:
-				playerIter->FCEvents(FORTUNE, players);
+				eventMessage = playerIter->FCEvents(FORTUNE, players);
+				Display::dialog("命運", "", eventMessage, "");
 				break;
 			default:
 				break;
 			}
 		}
 		else {//不可移動
+			Display::setConsoleCursorCoordinate(144, 26);
+			cout << "暫停回合剩餘" << setw(2) << right << setfill('0') << (playerIter->cannotMove - 1);
 			playerIter->cannotMove--;
 		}
 		// 玩家行為結束
