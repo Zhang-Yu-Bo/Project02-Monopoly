@@ -708,10 +708,9 @@ void Display::dialog(string title, string line1 = "", string line2 = "", string 
 	SetColor(79);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 18);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(82, 18);
 	cout << "¡@" << title;
-	for (int i = title.size() + 1; i < 24; i++) {
-		cout << "¡@";
-	}
 	setConsoleCursorCoordinate(80, 19);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	//--------------------------------------
@@ -719,28 +718,25 @@ void Display::dialog(string title, string line1 = "", string line2 = "", string 
 	SetColor(143);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 21);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(82, 21);
 	cout << "¡@" << line1;
-	for (int i = line1.size() + 1; i < 27; i++) {
-		cout << "¡@";
-	}
 	setConsoleCursorCoordinate(80, 22);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 23);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(82, 23);
 	cout << "¡@" << line2;
-	for (int i = line2.size() + 1; i < 27; i++) {
-		cout << "¡@";
-	}
 	setConsoleCursorCoordinate(80, 24);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 25);
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	setConsoleCursorCoordinate(82, 25);
 	cout << "¡@" << line3;
-	for (int i = line3.size() + 1; i < 26; i++) {
-		cout << "¡@";
-	}
 	setConsoleCursorCoordinate(80, 26);
 	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setColor();
-	Sleep(10000);
+	//Sleep(10000);
 }
 
 void Display::yesNoDialog(string title, string line1 = "", string line2 = "", string line3 = "")

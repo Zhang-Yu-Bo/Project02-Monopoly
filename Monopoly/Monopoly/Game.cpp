@@ -41,7 +41,7 @@ void Game::start() {
 		if (sites[i].owner != -1)
 			Display::printOwnEstate(sites[i], players);
 	}
-	Display::yesNoDialog("警告", "你這臭肥宅", "因油到不行", "罰3000元");
+	//Display::yesNoDialog("警告", "你這臭肥宅", "因油到不行", "罰3000元");
 }
 
 bool Game::isGameAlive() {
@@ -59,11 +59,6 @@ void Game::process() {
 	playerIter = players.begin() + (this->whosTurn % this->players.size());
 
 	while (this->gameLife) {
-
-		//Display::setConsoleCursorCoordinate(144, 26);
-		//cout << "這是測試";
-		//Display::setConsoleCursorCoordinate(210, 40);
-		//cout << "０";
 
 		/// 確認玩家數量&剩餘回合
 		playerNum = 0;
@@ -106,12 +101,18 @@ void Game::process() {
 			if (sites[i].owner != -1)
 				Display::printOwnEstate(sites[i], players);
 		}
+		for (int i = 0; i < 28; i++) {
+			if (sites[i].barrier == true)
+				Display::printObstacle(sites[i]);
+		}
 		Display::clearPlayLog();
 
 		// 玩家行為開始
+		bool isUsingControlDice = false;
+
 		if (!playerIter->cannotMove) {//可移動(回合沒被跳過)
 
-			if (!playerIter->barrier || !playerIter->controlledDice) {//擁有道具的情況
+			if (playerIter->barrier>0 || playerIter->controlledDice>0) {//擁有道具的情況
 				//詢問並顯示是否使用道具
 				//路障:剩餘數量N
 				Display::setConsoleCursorCoordinate(144, 26);
@@ -121,10 +122,10 @@ void Game::process() {
 					cout << "個，請問要使用嗎?(y/n)：";
 					string temp = "";
 					cin >> temp;
-					Display::setConsoleCursorCoordinate(144, 27);
 					if (temp == "y" || temp == "Y") {
-						playerIter->PlaceABarrier(playerIter->location,sites);
-						playerIter->barrier--;
+						playerIter->PlaceABarrier(playerIter->location, sites);
+						Display::printObstacle(sites[playerIter->location]);
+						Display::setConsoleCursorCoordinate(144, 27);
 						cout << "你在【" << sites[playerIter->location].name << "】放置了路障，你這臭GG";
 					}
 					else {
@@ -151,32 +152,78 @@ void Game::process() {
 						}
 					}
 					/// 等待輸入結束
-
 				}
 				Display::clearPlayLog();
 				//遙控骰子:剩餘數量N
 				//請輸入欲擲出點數
+				Display::setConsoleCursorCoordinate(144, 26);
+				if (playerIter->controlledDice > 0) {
+					cout << "道具【遙控骰子】尚餘";
+					cout << std::right << setw(2) << setfill('0') << playerIter->controlledDice;
+					cout << "個，請問要使用嗎?(y/n)：";
+					string temp = "";
+					cin >> temp;
+					Display::setConsoleCursorCoordinate(144, 27);
+					if (temp == "y" || temp == "Y") {
+						isUsingControlDice = true;
+						playerIter->controlledDice--;
+					}
+					else {
+						cout << "你選擇不使用遙控骰子";
+					}
+					Display::setConsoleCursorCoordinate(144, 28);
+					cout << "道具【遙控骰子】尚餘";
+					cout << std::right << setw(2) << setfill('0') << playerIter->controlledDice;
+					cout << "個";
+					/// 等待輸入開始
+					Display::setConsoleCursorCoordinate(144, 29);
+					cout << "請按任意鍵繼續遊戲．．．";
+					while (commandPress = _getch()) {
+						if (commandPress == KEYBOARD_ESCAPE) {
+							int temp = this->openOptions();
+							if (temp == 2) {
+								return;
+							}
+							Display::setConsoleCursorCoordinate(144, 29);
+							cout << "請按任意鍵繼續遊戲．．．";
+						}
+						else {
+							break;
+						}
+					}
+					/// 等待輸入結束
+				}
+				Display::clearPlayLog();
 			}
 
-			/// 等待輸入開始
-			Display::setConsoleCursorCoordinate(144, 26);
-			cout << "請按任意鍵骰動骰子．．．";
-			while (commandPress = _getch()) {
-				if (commandPress == KEYBOARD_ESCAPE) {
-					int temp = this->openOptions();
-					if (temp == 2) {
-						return;
-					}
-					Display::setConsoleCursorCoordinate(144, 26);
-					cout << "請按任意鍵骰動骰子．．．";
-				}
-				else {
-					break;
-				}
-			}
-			/// 等待輸入結束
 
 			int point = playerIter->RollADice();
+			if (!isUsingControlDice) {
+				/// 等待輸入開始
+				Display::setConsoleCursorCoordinate(144, 26);
+				cout << "請按任意鍵骰動骰子．．．";
+				while (commandPress = _getch()) {
+					if (commandPress == KEYBOARD_ESCAPE) {
+						int temp = this->openOptions();
+						if (temp == 2) {
+							return;
+						}
+						Display::setConsoleCursorCoordinate(144, 26);
+						cout << "請按任意鍵骰動骰子．．．";
+					}
+					else {
+						break;
+					}
+				}
+				/// 等待輸入結束
+			}
+			else {
+				Display::setConsoleCursorCoordinate(144, 26);
+				cout << "由於使用了遙控骰子，請輸入數字(1～6)：";
+				cin >> point;
+				point = (point > 6) ? (point % 6 + 1) : point;
+			}
+
 			Display::rollDiceAnimate(point);									// 顯示骰子動畫
 			Display::clearPlayLog();											// 清除PlayLog
 			cout << "現在骰到了 " << point;
