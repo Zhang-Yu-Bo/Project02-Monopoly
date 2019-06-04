@@ -85,7 +85,7 @@ void Game::process() {
 					max = players[i].money;
 				}
 			}
-			cout << "Player" << winner.playerID << " is winner.\n";
+			cout << "Player" << (winner.playerID+1) << " is winner.\n";
 			this->gameLife = false;
 			system("pause");
 			return;
