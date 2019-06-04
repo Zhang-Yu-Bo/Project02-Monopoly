@@ -129,6 +129,7 @@ void Game::process() {
 						cout << "你在【" << sites[playerIter->location].name << "】放置了路障，你這臭GG";
 					}
 					else {
+						Display::setConsoleCursorCoordinate(144, 27);
 						cout << "你選擇不設置路障，你是個好人";
 					}
 					Display::setConsoleCursorCoordinate(144, 28);
@@ -318,8 +319,10 @@ void Game::process() {
 				break;
 				//若踩到機會、命運
 			case CHANCE:
+				playerIter->FCEvents(CHANCE,players);
 				break;
 			case FORTUNE:
+				playerIter->FCEvents(FORTUNE, players);
 				break;
 			default:
 				break;
