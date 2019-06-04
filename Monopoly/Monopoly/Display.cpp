@@ -440,7 +440,7 @@ void Display::printPlayersStatus(const vector<Player> &players)
 	int coordinate[4][2] = { {148,5},{186,5},{148,13},{186,13} };
 	for (int i = 0; i < players.size(); i++) {
 		setConsoleCursorCoordinate(coordinate[i][0],coordinate[i][1]);
-		cout << setw(10) << left << players[i].money  << endl;
+		cout << setw(10) << left << setfill(' ') << players[i].money  << endl;
 	}
 }
 
@@ -830,37 +830,36 @@ void Display::dialog(string title, string line1 = "", string line2 = "", string 
 {
 	setConsoleCursorCoordinate(80, 17);
 	SetColor(79);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 18);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(82, 18);
 	cout << "¡@" << title;
 	setConsoleCursorCoordinate(80, 19);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	//--------------------------------------
 	setConsoleCursorCoordinate(80, 20);
 	SetColor(143);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 21);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(82, 21);
 	cout << "¡@" << line1;
 	setConsoleCursorCoordinate(80, 22);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 23);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(82, 23);
 	cout << "¡@" << line2;
 	setConsoleCursorCoordinate(80, 24);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(80, 25);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setConsoleCursorCoordinate(82, 25);
 	cout << "¡@" << line3;
 	setConsoleCursorCoordinate(80, 26);
-	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
+	cout << "¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@";
 	setColor();
-	//Sleep(10000);
 }
 
 void Display::yesNoDialog(string title, string line1 = "", string line2 = "", string line3 = "")

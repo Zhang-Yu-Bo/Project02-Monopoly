@@ -129,6 +129,7 @@ void Game::process() {
 						cout << "你在【" << sites[playerIter->location].name << "】放置了路障，你這臭GG";
 					}
 					else {
+						Display::setConsoleCursorCoordinate(144, 27);
 						cout << "你選擇不設置路障，你是個好人";
 					}
 					Display::setConsoleCursorCoordinate(144, 28);
@@ -246,7 +247,9 @@ void Game::process() {
 			cout << "【" << sites[currentLocation].name << "】";
 			Display::printPlayerStep(players);
 
+
 			//判斷格子類型
+			string eventMessage = "";
 			switch (sites[currentLocation].type) {
 			case START:
 				//do nothing for now
@@ -318,14 +321,20 @@ void Game::process() {
 				break;
 				//若踩到機會、命運
 			case CHANCE:
+				eventMessage = playerIter->FCEvents(CHANCE, players);
+				Display::dialog("機會", "", eventMessage, "");
 				break;
 			case FORTUNE:
+				eventMessage = playerIter->FCEvents(FORTUNE, players);
+				Display::dialog("命運", "", eventMessage, "");
 				break;
 			default:
 				break;
 			}
 		}
 		else {//不可移動
+			Display::setConsoleCursorCoordinate(144, 26);
+			cout << "暫停回合剩餘" << setw(2) << right << setfill('0') << (playerIter->cannotMove - 1);
 			playerIter->cannotMove--;
 		}
 		// 玩家行為結束

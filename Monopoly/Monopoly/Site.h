@@ -7,8 +7,8 @@ using namespace std;
 #define MAX_LEVEL 3
 #define START 0
 #define ESTATE 1
-#define CHANCE -1
-#define FORTUNE -2
+#define CHANCE -2
+#define FORTUNE -1
 #ifndef _SITE_H_
 #define _SITE_H_
 

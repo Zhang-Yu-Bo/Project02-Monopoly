@@ -2,6 +2,8 @@
 #include "Site.h"
 #include <cstdlib>
 #include <vector>
+#include <sstream>
+#include <iomanip>
 
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
@@ -26,7 +28,7 @@ public:
 	void UpgradeAnEstate(const int, vector<Site>&);//玩家升級房產(傳入房產地點,game裡的vector<Sites>&並一併修改)
 	void PayForTheToll(const int, const vector<Site>&, vector<Player>&);
 	void PlaceABarrier(const int, vector<Site>&);
-	void FCEvents(const int);//傳入機會OR命運
+	string FCEvents(const int,vector<Player>&);//傳入機會OR命運、所有玩家資料
 	///踩過起點是否給錢
 		//路障(道具)放置
 };
