@@ -41,7 +41,7 @@ void Game::start() {
 		if (sites[i].owner != -1)
 			Display::printOwnEstate(sites[i], players);
 	}
-	Display::yesNoDialog("警告", "你這臭肥宅", "因油到不行", "罰3000元");
+	//Display::yesNoDialog("警告", "你這臭肥宅", "因油到不行", "罰3000元");
 }
 
 bool Game::isGameAlive() {
@@ -108,6 +108,8 @@ void Game::process() {
 		}
 		Display::clearPlayLog();
 
+		Display::dialog("測試", "測試", "測試", "測試測試測");
+
 		// 玩家行為開始
 		if (!playerIter->cannotMove) {//可移動(回合沒被跳過)
 
@@ -124,7 +126,6 @@ void Game::process() {
 					Display::setConsoleCursorCoordinate(144, 27);
 					if (temp == "y" || temp == "Y") {
 						playerIter->PlaceABarrier(playerIter->location,sites);
-						playerIter->barrier--;
 						cout << "你在【" << sites[playerIter->location].name << "】放置了路障，你這臭GG";
 					}
 					else {
