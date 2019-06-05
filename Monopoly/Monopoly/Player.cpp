@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Stock.h"
 
 Player::Player(int playerID, int location, int money, int barrier = 0, int controlledDice = 0, int cannotMove = 0) {
 	this->playerID = playerID;
@@ -9,6 +10,10 @@ Player::Player(int playerID, int location, int money, int barrier = 0, int contr
 	//this->controlledDice = controlledDice;
 	this->controlledDice = 2;
 	this->cannotMove = cannotMove;
+	this->deposit = 0;
+	this->loan = 0;
+	this->stockNum[Stock::companyA] = 0;
+	this->stockNum[Stock::companyB] = 0;
 }
 
 int Player::RollADice(){

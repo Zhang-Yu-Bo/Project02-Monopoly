@@ -43,6 +43,8 @@ public:
 			//:琌ど(┪程蔼单ぃど)(高拜)
 				//call player柑function(v)
 		//:暗ㄆ
+	void bankSystem();
+	void allClean();
 private:
 	// ...ず场ㄧΑ
 	void loadMap();

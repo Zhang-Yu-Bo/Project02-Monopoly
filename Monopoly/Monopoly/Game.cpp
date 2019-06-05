@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#include "Stock.h"
 
 Game::Game(string fileName = "basemap") {
 
@@ -41,7 +42,6 @@ void Game::start() {
 		if (sites[i].owner != -1)
 			Display::printOwnEstate(sites[i], players);
 	}
-	//Display::yesNoDialog("警告", "你這臭肥宅", "因油到不行", "罰3000元");
 }
 
 bool Game::isGameAlive() {
@@ -88,24 +88,7 @@ void Game::process() {
 		/// 勝負判定結束
 
 		/// 全畫面更新
-		Display::setColor();
-		system("cls");
-		Display::printBoard();
-		Display::printRightSpace(allPlayers);
-		Display::printCurrentPlayer(whosTurn + 1);
-		Display::printRound(remainTurn);
-		Display::printEstate(sites);
-		Display::printPlayersStatus(players);
-		Display::printPlayerStep(players);
-		for (int i = 0; i < 28; i++) {
-			if (sites[i].owner != -1)
-				Display::printOwnEstate(sites[i], players);
-		}
-		for (int i = 0; i < 28; i++) {
-			if (sites[i].barrier == true)
-				Display::printObstacle(sites[i]);
-		}
-		Display::clearPlayLog();
+		this->allClean();
 
 		// 玩家行為開始
 		bool isUsingControlDice = false;
@@ -323,14 +306,38 @@ void Game::process() {
 			case CHANCE:
 				eventMessage = playerIter->FCEvents(CHANCE, players);
 				Display::dialog("機會", "", eventMessage, "");
+				while (commandPress = _getch()) {
+					break;
+				}
+				this->allClean();
 				break;
 			case FORTUNE:
 				eventMessage = playerIter->FCEvents(FORTUNE, players);
 				Display::dialog("命運", "", eventMessage, "");
+				while (commandPress = _getch()) {
+					break;
+				}
+				this->allClean();
 				break;
 			default:
 				break;
 			}
+
+			// 進入銀行系統
+			Display::setConsoleCursorCoordinate(144, 36);
+			cout << "是否進入銀行系統？(y/n):";
+			string temp = "";
+			cin >> temp;
+			if (temp == "y" || temp == "Y") {
+				Display::cursorVisiable(true);
+				this->bankSystem();
+				Display::cursorVisiable(false);
+			}
+			else {
+				Display::setConsoleCursorCoordinate(144, 37);
+				cout << "你選擇不進入銀行";
+			}
+			
 		}
 		else {//不可移動
 			Display::setConsoleCursorCoordinate(144, 26);
@@ -376,6 +383,7 @@ void Game::process() {
 		/// 破產判定結束
 
 		/// 尋找下個玩家開始
+		Stock::newDay();
 		do {
 			this->whosTurn++;
 			if (this->whosTurn % this->players.size() == 0) {
@@ -615,4 +623,25 @@ int Game::openOptions() {
 
 	}
 	return 0;
+}
+
+void Game::allClean() {
+	Display::setColor();
+	system("cls");
+	Display::printBoard();
+	Display::printRightSpace(allPlayers);
+	Display::printCurrentPlayer(whosTurn + 1);
+	Display::printRound(remainTurn);
+	Display::printEstate(sites);
+	Display::printPlayersStatus(players);
+	Display::printPlayerStep(players);
+	for (int i = 0; i < 28; i++) {
+		if (sites[i].owner != -1)
+			Display::printOwnEstate(sites[i], players);
+	}
+	for (int i = 0; i < 28; i++) {
+		if (sites[i].barrier == true)
+			Display::printObstacle(sites[i]);
+	}
+	Display::clearPlayLog();
 }

@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bank.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Site.h" />
+    <ClInclude Include="Stock.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map\basemap.txt" />

@@ -36,6 +36,9 @@
     <ClCompile Include="Events.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="Bank.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainMenu.h">
@@ -51,6 +54,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Stock.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

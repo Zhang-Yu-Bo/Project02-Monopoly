@@ -1,9 +1,17 @@
 #include "MainMenu.h"
 #include "Game.h"
+#include "Stock.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
+
+string Stock::companyA = "NTUST公司";
+string Stock::companyB = "NTU公司";
+int Stock::companyA_money = 100;
+int Stock::companyB_money = 100;
+int Stock::companyA_remainNum = 100;
+int Stock::companyB_remainNum = 100;
 
 int main(void) {
 	MainMenu menu;
@@ -18,6 +26,7 @@ int main(void) {
 		}
 		if (fileName != "exit") {
 			// 開始遊戲
+			Stock::initial();
 			Game newGame(fileName);
 			newGame.start();
 			while (newGame.isGameAlive()) {
