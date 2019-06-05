@@ -3,6 +3,7 @@
 
 Game::Game(string fileName = "basemap") {
 
+
 	system("cls");
 	Display::setConsoleCursorCoordinate(0, 0);
 
@@ -16,6 +17,9 @@ Game::Game(string fileName = "basemap") {
 
 	// loading Map from file
 	this->loadMap();
+
+	// 下背景音樂
+	PlaySound("Sounds/Lucid_Dreamer_2.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 }
 
 Game::~Game() {
@@ -25,6 +29,7 @@ Game::~Game() {
 	this->gameLife = false;
 	this->whosTurn = 0;
 	this->remainTurn = 0;
+	PlaySound(NULL, NULL, 0);
 }
 
 void Game::start() {

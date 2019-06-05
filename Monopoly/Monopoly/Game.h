@@ -8,8 +8,8 @@
 #include <conio.h>
 #include <vector>
 #include <fstream>
-
-
+#include <mmsystem.h>
+#pragma comment(lib,"Winmm.lib")
 
 #define KEYBOARD_UP 72
 #define KEYBOARD_DOWN 80
