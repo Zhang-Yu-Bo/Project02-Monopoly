@@ -158,7 +158,7 @@ void Game::bankSystem() {
 								cout << "購買成功";
 							}
 							else {
-								cout << "金額不足";
+								cout << "存款不足";
 							}
 						}
 						else {
@@ -174,7 +174,7 @@ void Game::bankSystem() {
 								cout << "購買成功";
 							}
 							else {
-								cout << "金額不足";
+								cout << "存款不足";
 							}
 						}
 						else {
